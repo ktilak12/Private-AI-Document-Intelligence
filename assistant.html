@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error":"#690005","surface-container":"#1c1f29","on-secondary":"#002e6a","surface-container-lowest":"#0a0e17","outline":"#918fa1","secondary-fixed":"#d8e2ff","primary":"#c3c0ff","secondary-container":"#0566d9","surface-container-highest":"#31353f","inverse-surface":"#dfe2ef","surface-tint":"#c3c0ff","outline-variant":"#464555","tertiary-container":"#006e4b","tertiary-fixed":"#6ffbbe","inverse-on-surface":"#2c303a","on-background":"#dfe2ef","on-primary-container":"#dad7ff","tertiary":"#4edea3","background":"#0f131c","primary-fixed":"#e2dfff","surface-bright":"#353943","on-primary":"#1d00a5","error":"#ffb4ab","on-secondary-container":"#e6ecff","tertiary-fixed-dim":"#4edea3","surface-dim":"#0f131c","primary-fixed-dim":"#c3c0ff","on-surface":"#dfe2ef","inverse-primary":"#4d44e3","on-primary-fixed":"#0f0069","on-tertiary-fixed":"#002113","on-tertiary":"#003824","surface-container-low":"#181b25","on-tertiary-container":"#67f4b7","on-secondary-fixed-variant":"#004395","surface-variant":"#31353f","on-tertiary-fixed-variant":"#005236","error-container":"#93000a","on-error-container":"#ffdad6","on-primary-fixed-variant":"#3323cc","secondary":"#adc6ff","secondary-fixed-dim":"#adc6ff","primary-container":"#4f46e5","surface-container-high":"#262a34","on-secondary-fixed":"#001a42","surface":"#0f131c","on-surface-variant":"#c7c4d8"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-xs":"0.25rem","space-sm":"0.5rem","space-md":"0.75rem","margin-tablet":"1.5rem","gutter":"1rem","gutter-desktop":"1.5rem","margin":"1rem","space-lg":"1.25rem","margin-desktop":"2rem","space-xl":"2rem"},fontFamily:{"headline-xl":["Geist"],"headline-md":["Geist"],"body-lg":["Inter"],"label-md":["JetBrains Mono"],"headline-lg-mobile":["Geist"],"headline-sm":["Geist"],"headline-xl-mobile":["Geist"],"body-sm":["Inter"],"body-md":["Inter"],"code-citation":["JetBrains Mono"],"label-sm":["JetBrains Mono"],"headline-lg":["Geist"]},fontSize:{"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}],"headline-lg-mobile":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"500"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"code-citation":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between select-none"><div class="flex flex-col flex-1 overflow-y-auto"><div class="h-16 flex items-center gap-3 px-5 border-b border-outline-variant/30"><img alt="PAIDI Security & Intelligence Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X5Y_Oa1nYhKVk6IKq4U0kZL60jwxiP829P59_7sq1HlQYo7_5dwmhrjYsa-nMkeqWV0tMObD4OOr13tLauRX8E9XvpQHvPImyhisLR0mgpPmCcn6axe0clIommwt-c3rZ0GuOY-GtXzTHD0CeCNcDB5u9Ed4ylR-Yj3u2ishvy6y5vwZWajZQ_uXqqwjVPrCbrlglDnOjGNyqiPiIHA4KErx6aasdsZgS5Lt1iyq5mgqTfIiUxTqiO2mU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface leading-none">PAIDI</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-none mt-1">Private Document Intel</span></div></div><div class="px-3 py-4 flex flex-col gap-6"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-medium"><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="dashboard" href="index.html"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="documents" href="documents.html"><span class="material-symbols-outlined text-[20px]">description</span><span>Documents</span></a><a aria-current="page" class="flex items-center gap-3 px-3 py-2 rounded transition-colors bg-primary-container text-on-primary-container font-medium" data-path="ai-assistant" href="assistant.html"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>AI Assistant</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="search" href="javascript:void(0)" onclick="openCommandPalette()"><span class="material-symbols-outlined text-[20px]">search</span><span>Search</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="collections" href="documents.html#collections"><span class="material-symbols-outlined text-[20px]">folder_copy</span><span>Collections</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="history" href="audit.html"><span class="material-symbols-outlined text-[20px]">history</span><span>History</span></a></nav><div class="h-[1px] bg-outline-variant/30 mx-2"></div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-medium"><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics" href="evaluation.html#analytics"><span class="material-symbols-outlined text-[20px]">monitoring</span><span>Analytics</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="evaluation" href="evaluation.html"><span class="material-symbols-outlined text-[20px]">fact_check</span><span>Evaluation</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="settings.html"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a></nav></div></div><div class="p-3 border-t border-outline-variant/30 bg-surface-container-lowest/40"><div class="flex items-center justify-between p-2 rounded bg-surface-container-low border border-outline-variant/20"><div class="flex items-center gap-2.5 min-w-0"><div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm font-semibold flex-shrink-0">T</div><div class="flex flex-col min-w-0"><span class="font-body-md text-body-md font-medium text-on-surface truncate leading-tight">Tilak</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate leading-tight mt-0.5">Lead Researcher · Enterprise</span></div></div><div class="flex items-center gap-1 flex-shrink-0 ml-1"><button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" title="Collapse sidebar" type="button"><span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span></button><button class="text-on-surface-variant hover:text-error p-1 rounded hover:bg-surface-container-high transition-colors" title="Log out" type="button"><span class="material-symbols-outlined text-[18px]">logout</span></button></div></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-6"><div class="flex items-center gap-4 min-w-[200px]"><div class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant"><span class="text-on-surface-variant/70">Workspace</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-medium">Intelligence Core</span></div></div><div class="flex-1 max-w-xl mx-6"><div class="relative flex items-center w-full"><span class="material-symbols-outlined text-outline absolute left-3 text-[18px]">search</span><input class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded px-9 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container transition-all" placeholder="Search your knowledge base (⌘K)..." type="text"/><span class="absolute right-2.5 font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">⌘K</span></div></div><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant/30"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><span class="font-label-sm text-label-sm text-on-surface-variant hidden lg:inline">All systems operational</span></div><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant/30 text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-tertiary">shield_lock</span><span class="font-label-sm text-label-sm hidden xl:inline">End-to-End Isolated</span></div><button class="relative p-1.5 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-4 h-4 bg-primary-container text-on-primary-container rounded-full font-code-citation text-code-citation flex items-center justify-center font-bold">2</span></button><div class="h-5 w-[1px] bg-outline-variant/30"></div><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden text-on-surface">
+<div class="flex flex-1 w-full h-full overflow-hidden">
+<!-- Left Navigation Panel: Session Ledger -->
+<aside class="w-64 flex-shrink-0 bg-surface-container-lowest flex flex-col justify-between select-none">
+<div class="flex flex-col h-full">
+<!-- Session Ledger Header -->
+<div class="p-4 pb-3 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Sessions</span>
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container-high text-primary">04 ACTIVE</span>
+</div>
+<button class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary-container hover:bg-primary-container/90 text-on-primary-container rounded font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>New Query Session</span>
+</button>
+<!-- History Filter Field -->
+<div class="relative flex items-center w-full">
+<span class="material-symbols-outlined text-outline absolute left-2.5 text-[16px]">search</span>
+<input class="w-full bg-surface-container-low rounded pl-8 pr-2.5 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container transition-all" placeholder="Filter threads..." type="text"/>
+</div>
+</div>
+<!-- Session List -->
+<div class="flex-1 overflow-y-auto px-2 space-y-1">
+<!-- Session Item: Active -->
+<div class="p-2.5 rounded bg-surface-container-high text-on-surface cursor-pointer flex flex-col gap-1 transition-all shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm truncate text-primary leading-tight">Notice & Indemnity</span>
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Termination conditions & severance</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container-lowest text-tertiary">3 SOURCES</span>
+<span class="font-label-sm text-label-sm text-outline">Just now</span>
+</div>
+</div>
+<!-- Session Item -->
+<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm truncate leading-tight">Q4 Guidance Analysis</span>
+<span class="font-label-sm text-label-sm text-outline">1d</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline truncate">Revenue margins & cash burn</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">12 SOURCES</span>
+</div>
+</div>
+<!-- Session Item -->
+<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm truncate leading-tight">AI Regulatory Audit</span>
+<span class="font-label-sm text-label-sm text-outline">Sep 14</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline truncate">EU AI Act Tier 2 validation</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">8 SOURCES</span>
+</div>
+</div>
+<!-- Session Item -->
+<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm truncate leading-tight">Vendor SLA Comparison</span>
+<span class="font-label-sm text-label-sm text-outline">Sep 12</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline truncate">Tier-3 datacenter uptimes</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">4 SOURCES</span>
+</div>
+</div>
+</div>
+<!-- Scope Metadata Summary Footer -->
+<div class="p-3 bg-surface-container-low m-2 rounded flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Indexed Knowledge</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary">verified_user</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-citation text-code-citation px-2 py-0.5 rounded bg-surface-container-highest text-tertiary">3 ACTIVE DOCS</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">48.2 MB vectorised</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Stage: Conversation & Synthesis Workspace -->
+<section class="flex-1 flex flex-col min-w-0 bg-surface relative overflow-hidden">
+<!-- Session Telemetry Banner -->
+<div class="h-12 px-6 flex items-center justify-between bg-surface-container-low/60 backdrop-blur select-none z-10 flex-shrink-0">
+<div class="flex items-center gap-3 min-w-0">
+<div class="flex items-center gap-2 truncate">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Employment Notice & Indemnity</span>
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary">HYBRID GROUNDED</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden xl:flex items-center gap-2 font-code-citation text-code-citation text-outline">
+<span>MODEL:</span>
+<span class="text-on-surface px-1.5 py-0.5 rounded bg-surface-container">PAIDI-Neural-Retriever-v3</span>
+</div>
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" title="Export Thread" type="button">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</div>
+<!-- Dialogue History Canvas -->
+<div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+<!-- Human Prompt Context Unit -->
+<div class="flex justify-end items-start gap-3 pl-12">
+<div class="flex flex-col items-end gap-1.5 max-w-2xl">
+<div class="p-4 rounded bg-surface-container-high text-on-surface shadow-sm">
+<p class="font-body-md text-body-md">What is the required termination notice period, and does severance pay apply if termination is initiated without cause?</p>
+</div>
+<div class="flex items-center gap-2 font-label-sm text-label-sm text-outline px-1">
+<span>Tilak (Lead Researcher)</span>
+<span>·</span>
+<span>10:42 AM</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Assistant Synthesized Response Unit -->
+<div class="flex items-start gap-4 pr-12">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<div class="flex flex-col gap-4 flex-1 max-w-3xl">
+<div class="p-5 rounded bg-surface-container-low text-on-surface shadow-sm space-y-4">
+<div class="flex items-center justify-between pb-3 bg-surface-container-lowest/30 p-2.5 rounded">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Verified Enterprise Synthesis</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-citation text-code-citation px-2 py-0.5 rounded bg-surface-container-highest text-tertiary">96.4% CONFIDENCE</span>
+<span class="font-code-citation text-code-citation text-outline">LATENCY: 412ms</span>
+</div>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface leading-relaxed space-y-3">
+<p>Based on your verified repository corpora, the contractual conditions for separation are strictly defined under corporate covenant:</p>
+<div class="p-3.5 rounded bg-surface-container flex flex-col gap-2">
+<div class="flex items-start gap-2">
+<span class="font-headline-sm text-headline-sm text-primary">1.</span>
+<div>
+<strong class="text-on-surface font-headline-sm text-headline-sm">Notice Period:</strong>
+<span class="text-on-surface-variant font-body-md text-body-md"> The covenant mandates an absolute baseline of <strong class="text-on-surface">thirty (30) calendar days prior written notice</strong> for standard bilateral separations initiated by either entity.</span>
+<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-primary/10 hover:bg-primary/20 text-primary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(1)" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>SRC 1 §8.2</span>
+</button>
+<span class="text-on-surface-variant font-body-md text-body-md"> In the scenario of involuntary non-fault displacement, notice execution must be conducted concurrently with an executive exit protocol.</span>
+<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-secondary-container/20 hover:bg-secondary-container/30 text-secondary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(3)" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>SRC 3 §3.1</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-3.5 rounded bg-surface-container flex flex-col gap-2">
+<div class="flex items-start gap-2">
+<span class="font-headline-sm text-headline-sm text-primary">2.</span>
+<div>
+<strong class="text-on-surface font-headline-sm text-headline-sm">Severance Eligibility:</strong>
+<span class="text-on-surface-variant font-body-md text-body-md"> When terminated without cause, the subject qualifies for statutory continuation equivalent to <strong class="text-on-surface">two (2) months of standard baseline remuneration</strong>. Disbursement remains conditioned upon full receipt of an unencumbered general liability release executed within 21 calendar days.</span>
+<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-primary/10 hover:bg-primary/20 text-primary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(2)" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>SRC 2 §8.4</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Citation Strip -->
+<div class="pt-3 flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Grounded Evidentiary Attribution (3 Records)</span>
+<span class="font-code-citation text-code-citation text-tertiary">Cryptographically Signed Hash</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+<!-- Citation Micro-Card 1: Active Focus -->
+<div class="p-2.5 rounded bg-surface-container-high hover:bg-surface-container-highest cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-1" onclick="selectSource('Employment_Contract.pdf', 'Page 14 · §8.2', '96.4%', 'Section 8.2 — Notice of Separation. Either party may terminate this employment relationship at any time by providing not less than thirty (30) days prior written notice to the other party. During such 30-day period, the Executive shall continue to render services in accordance with standard fiduciary duty.', '#chk_89a24d', 1)">
+<div class="flex items-center justify-between">
+<span class="font-code-citation text-code-citation text-primary">SRC 1 · PAGE 14</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface truncate">Employment_Contract.pdf</span>
+<p class="font-body-sm text-body-sm text-outline truncate">"...thirty (30) days prior written notice..."</p>
+</div>
+<!-- Citation Micro-Card 2 -->
+<div class="p-2.5 rounded bg-surface-container hover:bg-surface-container-high cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-2" onclick="selectSource('Employment_Contract.pdf', 'Page 15 · §8.4', '94.8%', 'Section 8.4 — Involuntary Termination Severance. Subject to the execution of a definitive release of claims within 21 days following separation, Company shall furnish severance equivalent to two (2) months base salary payable via bi-weekly intervals.', '#chk_91b72e', 2)">
+<div class="flex items-center justify-between">
+<span class="font-code-citation text-code-citation text-on-surface-variant">SRC 2 · PAGE 15</span>
+<span class="material-symbols-outlined text-[14px] text-outline">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface truncate">Employment_Contract.pdf</span>
+<p class="font-body-sm text-body-sm text-outline truncate">"...two (2) months base remuneration..."</p>
+</div>
+<!-- Citation Micro-Card 3 -->
+<div class="p-2.5 rounded bg-surface-container hover:bg-surface-container-high cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-3" onclick="selectSource('Company_Policy_Handbook.docx', 'Page 7 · §3.1', '91.2%', 'Section 3.1 — Executive Separation Briefing. For unprompted non-fault involuntary transitions, People Operations and Legal Counsel shall convene an Exit Strategy Conference immediately concurrent with notice dispatch.', '#chk_14c88f', 3)">
+<div class="flex items-center justify-between">
+<span class="font-code-citation text-code-citation text-on-surface-variant">SRC 3 · PAGE 07</span>
+<span class="material-symbols-outlined text-[14px] text-outline">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface truncate">Company_Policy_Handbook.docx</span>
+<p class="font-body-sm text-body-sm text-outline truncate">"...executive exit briefing protocols..."</p>
+</div>
+</div>
+</div>
+<!-- Post-Response Utility Bar -->
+<div class="flex items-center justify-between pt-3 text-outline font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Copy Text</span>
+</button>
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
+<span>Export Memo</span>
+</button>
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+<span>Flag Variance</span>
+</button>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_down</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Pinned Command Prompt -->
+<div class="p-4 bg-surface-container-lowest/90 backdrop-blur flex flex-col gap-2 z-20">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline">Target Knowledge:</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>3 Documents Active</span>
+<button class="text-primary hover:underline ml-1" type="button">Edit</button>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline">Retrieval Mode:</span>
+<button class="font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary-container text-on-primary-container" type="button">STRICT FACTUAL</button>
+</div>
+</div>
+<!-- Terminal Input Shell -->
+<div class="flex items-center gap-2 bg-surface-container-low rounded p-1.5 pl-3">
+<button class="p-1 text-outline hover:text-on-surface transition-colors" title="Attach Document" type="button">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none px-2 py-1" placeholder="Ask follow-up question or instruct deep contractual analysis..." type="text"/>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span>Query</span>
+<span class="font-code-citation text-code-citation opacity-75">⌘↵</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Dedicated Inspection Rail: Grounded Evidentiary Inspector -->
+<aside class="w-80 flex-shrink-0 bg-surface-container-lowest flex flex-col justify-between overflow-hidden">
+<div class="flex flex-col h-full">
+<!-- Inspector Top Header -->
+<div class="p-4 pb-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Source Inspector</span>
+<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary">CRYPTOGRAPHIC SEAL</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Attribution Detail</span>
+</div>
+</div>
+<!-- Inspector Payload Canvas -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Document Passport -->
+<div class="p-3 rounded bg-surface-container flex flex-col gap-2.5">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[24px]">description</span>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate font-medium" id="inspect-doc">Employment_Contract.pdf</span>
+<span class="font-code-citation text-code-citation text-outline" id="inspect-loc">Page 14 · §8.2 (Notice of Separation)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-2 bg-surface-container-lowest/40 p-2 rounded">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Semantic Relevance</span>
+<span class="font-code-citation text-code-citation text-tertiary font-semibold" id="inspect-score">96.4% Similarity</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Ingest Timestamp</span>
+<span class="font-code-citation text-code-citation text-on-surface">2024-09-18 14:02</span>
+</div>
+</div>
+</div>
+<!-- Direct Verifiable Excerpt -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Indexed Corpus Fragment</span>
+<span class="font-code-citation text-code-citation text-outline">OCR VERIFIED</span>
+</div>
+<div class="p-3.5 rounded bg-surface-container-low text-on-surface leading-relaxed relative">
+<div class="w-1 absolute left-0 top-0 bottom-0 bg-primary rounded-l"></div>
+<p class="font-body-md text-body-md italic text-on-surface-variant" id="inspect-text">
+                "Section 8.2 — Notice of Separation. Either party may terminate this employment relationship at any time by providing not less than thirty (30) days prior written notice to the other party. During such 30-day period, the Executive shall continue to render services in accordance with standard fiduciary duty."
+              </p>
+</div>
+</div>
+<!-- Document Visual Mini-Locator -->
+<div class="p-3 rounded bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Page Position Mapping</span>
+<span class="font-code-citation text-code-citation text-outline">P. 14 of 42</span>
+</div>
+<div class="w-full h-24 bg-surface-container rounded relative overflow-hidden flex flex-col justify-between p-2 select-none">
+<div class="space-y-1">
+<div class="w-2/3 h-1.5 bg-surface-container-highest rounded"></div>
+<div class="w-full h-1 bg-surface-container-highest/60 rounded"></div>
+<div class="w-5/6 h-1 bg-surface-container-highest/60 rounded"></div>
+</div>
+<!-- Highlight Box representing bounding box -->
+<div class="w-full bg-primary/20 p-1 rounded">
+<div class="w-full h-1 bg-primary rounded"></div>
+<div class="w-4/5 h-1 bg-primary mt-1 rounded"></div>
+</div>
+<div class="space-y-1">
+<div class="w-11/12 h-1 bg-surface-container-highest/60 rounded"></div>
+<div class="w-3/4 h-1 bg-surface-container-highest/60 rounded"></div>
+</div>
+</div>
+</div>
+<!-- Vector Chunk Audit Metadata -->
+<div class="p-3 rounded bg-surface-container flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Pipeline Provenance</span>
+<div class="space-y-1 font-code-citation text-code-citation">
+<div class="flex justify-between">
+<span class="text-outline">Chunk Vector ID:</span>
+<span class="text-on-surface" id="inspect-chunk">#chk_89a24d</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Embedding Model:</span>
+<span class="text-on-surface">bge-large-en-v1.5</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Partition Strategy:</span>
+<span class="text-on-surface">RecursiveToken-512</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Access Inspection Actions -->
+<div class="p-3 bg-surface-container-low flex flex-col gap-2">
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Open in Full PDF Canvas</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-1.5 py-1.5 px-2 bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded font-code-citation text-code-citation transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">link</span>
+<span>Copy Link</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-1.5 px-2 bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded font-code-citation text-code-citation transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">download</span>
+<span>Excerpt TXT</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  function selectSource(docName, loc, score, text, chunk, index) {
+    document.getElementById('inspect-doc').innerText = docName;
+    document.getElementById('inspect-loc').innerText = loc;
+    document.getElementById('inspect-score').innerText = score + ' Similarity';
+    document.getElementById('inspect-text').innerText = '"' + text + '"';
+    document.getElementById('inspect-chunk').innerText = chunk;
+
+    // Reset styles on micro-cards
+    [1, 2, 3].forEach(i => {
+      const el = document.getElementById('cit-card-' + i);
+      if (el) {
+        if (i === index) {
+          el.className = 'p-2.5 rounded bg-surface-container-high hover:bg-surface-container-highest cursor-pointer flex flex-col gap-1 transition-all shadow-sm';
+        } else {
+          el.className = 'p-2.5 rounded bg-surface-container hover:bg-surface-container-high cursor-pointer flex flex-col gap-1 transition-all';
+        }
+      }
+    });
+  }
+
+  function highlightCitation(index) {
+    const trigger = document.getElementById('cit-card-' + index);
+    if (trigger) {
+      trigger.click();
+      trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+</script></main></div>
+<!-- Global Command Palette Modal (⌘K) -->
+<div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
+  <div class="bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div class="flex items-center px-4 py-3 border-b border-outline-variant/30 gap-3">
+      <span class="material-symbols-outlined text-primary text-[22px]">search</span>
+      <input id="cmd-palette-input" type="text" placeholder="Search commands, documents, or ask AI... (Press Esc to close)" class="w-full bg-transparent text-on-surface font-body-md focus:outline-none placeholder:text-outline" />
+      <span class="font-code-citation text-code-citation px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">ESC</span>
+    </div>
+    <div class="p-2 max-h-96 overflow-y-auto space-y-1 text-on-surface-variant font-body-sm" id="cmd-palette-results">
+      <div class="px-3 py-1.5 text-label-sm font-label-sm uppercase tracking-wider text-outline">Quick Navigation</div>
+      <a href="index.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">grid_view</span><span>Dashboard</span></div>
+        <span class="font-code-citation text-outline">G D</span>
+      </a>
+      <a href="assistant.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">smart_toy</span><span>AI Assistant & Verification</span></div>
+        <span class="font-code-citation text-outline">G A</span>
+      </a>
+      <a href="documents.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">description</span><span>Document Library</span></div>
+        <span class="font-code-citation text-outline">G L</span>
+      </a>
+      <a href="evaluation.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">fact_check</span><span>Evaluation & Observability</span></div>
+        <span class="font-code-citation text-outline">G E</span>
+      </a>
+      <a href="audit.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">history</span><span>History & Query Audit</span></div>
+        <span class="font-code-citation text-outline">G H</span>
+      </a>
+      <a href="settings.html" class="flex items-center justify-between px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary">settings</span><span>System Configuration</span></div>
+        <span class="font-code-citation text-outline">G S</span>
+      </a>
+      <div class="px-3 py-1.5 text-label-sm font-label-sm uppercase tracking-wider text-outline pt-2">Sample Quick Queries</div>
+      <div onclick="executeCommandQuery('Summarize termination covenants with financial liability')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
+        <span>Summarize termination covenants with financial liability</span>
+      </div>
+      <div onclick="executeCommandQuery('Extract compliance deadlines for Q3 2026')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
+        <span>Extract compliance deadlines for Q3 2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Global Toast Notification -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[110] flex flex-col gap-2 pointer-events-none"></div>
+
+<script>
+// Global Command Palette Logic
+function openCommandPalette() {
+  const modal = document.getElementById('cmd-palette');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    const input = document.getElementById('cmd-palette-input');
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
+  }
+}
+
+function closeCommandPalette() {
+  const modal = document.getElementById('cmd-palette');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function executeCommandQuery(q) {
+  closeCommandPalette();
+  window.location.href = 'assistant.html?q=' + encodeURIComponent(q);
+}
+
+document.addEventListener('keydown', function(e) {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const modal = document.getElementById('cmd-palette');
+    if (modal && !modal.classList.contains('hidden')) {
+      closeCommandPalette();
+    } else {
+      openCommandPalette();
+    }
+  }
+  if (e.key === 'Escape') {
+    closeCommandPalette();
+  }
+});
+
+const cmdModal = document.getElementById('cmd-palette');
+if (cmdModal) {
+  cmdModal.addEventListener('click', function(e) {
+    if (e.target === cmdModal) closeCommandPalette();
+  });
+}
+
+// Global Toast Messenger
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  const icon = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+  const color = type === 'success' ? 'text-tertiary border-tertiary/40' : type === 'error' ? 'text-error border-error/40' : 'text-primary border-primary/40';
+  toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-lg bg-surface-container-high border ' + color + ' shadow-2xl text-on-surface font-body-sm transition-all transform duration-300 translate-y-2 opacity-0';
+  toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">' + icon + '</span><span>' + message + '</span>';
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.remove('translate-y-2', 'opacity-0');
+  }, 10);
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// Bind header search input to Command Palette
+document.querySelectorAll('header input[type="text"]').forEach(input => {
+  input.addEventListener('click', (e) => {
+    e.preventDefault();
+    openCommandPalette();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      executeCommandQuery(input.value);
+    }
+  });
+});
+</script>
+
+
+<script>
+  // Enhanced Assistant Chat & Source Inspector
+  const sampleCorpus = {
+    "Notice & Indemnity": {
+      title: "Employment Notice & Indemnity",
+      query: "What are the notice periods and severance liability conditions in Section 4?",
+      response: "Under Section 4.2 of the **Executive Employment Agreement (MSA_2026_V4)**, termination without cause requires a mandatory notice period of **90 calendar days** [DOC-01 §4.2]. In lieu of notice, the company must provide an immediate severance lump sum equal to **6 months of base salary** plus accelerated vesting of Tier-1 equity options [DOC-01 §4.3].\n\nFurthermore, per **Vendor Mutual Indemnity Addendum (§11.1)**, standard indemnification covers third-party IP claims up to **$5,000,000**, excluding gross negligence or willful misconduct [DOC-02 §11.1].",
+      sources: [
+        {
+          id: "DOC-01",
+          name: "Executive_MSA_2026_V4.pdf",
+          loc: "Section 4.2 · Page 18",
+          score: "0.982 COSINE",
+          text: "4.2 Termination without Cause. Company may terminate Employee without Cause upon ninety (90) calendar days prior written notice. During such 90-day period, Employee shall continue to receive base compensation and benefits. In lieu of notice, Company may elect to provide immediate lump-sum payment of six (6) months Base Salary.",
+          chunk: "CHUNK_0488_A2",
+          index: "Qdrant / collection:msa_vault"
+        },
+        {
+          id: "DOC-02",
+          name: "Vendor_Indemnity_Addendum.pdf",
+          loc: "Clause 11.1 · Page 4",
+          score: "0.941 COSINE",
+          text: "11.1 Mutual Indemnification. Each party shall defend, indemnify, and hold harmless the other party against all third-party claims arising out of intellectual property infringement up to an aggregate cap of $5,000,000.00 USD.",
+          chunk: "CHUNK_0112_C9",
+          index: "Qdrant / collection:legal_contracts"
+        },
+        {
+          id: "DOC-03",
+          name: "Corporate_Governance_Handbook_2026.pdf",
+          loc: "Section 8.4 · Page 42",
+          score: "0.887 COSINE",
+          text: "8.4 Severance Protocols. All executive severance packages exceeding 3 months of base compensation require prior written authorization from the Compensation Committee.",
+          chunk: "CHUNK_0921_F4",
+          index: "Qdrant / collection:governance"
+        }
+      ]
+    },
+    "Q4 Guidance Analysis": {
+      title: "Q4 Guidance & Financial Analysis",
+      query: "Summarize Q4 revenue forecast and operating margin risks",
+      response: "Based on the **Q4 2026 Financial Projections (SEC_Form_10Q)**, projected GAAP net revenue is targeted at **$48.5M - $52.0M**, representing a 14% YoY increase [DOC-04 §2.1].\n\nPrimary operating margin risks include increased compute infrastructure costs (up 22% due to local LLM cluster expansion) and extended enterprise sales cycles [DOC-04 §3.4].",
+      sources: [
+        {
+          id: "DOC-04",
+          name: "SEC_Form_10Q_Q4_2026.pdf",
+          loc: "Item 2 · Management Discussion · Page 14",
+          score: "0.964 COSINE",
+          text: "Item 2. Financial Condition and Results of Operations. Consolidated net revenues for the fourth quarter are projected in the range of $48.5M to $52.0M. Compute infrastructure costs expanded by 22% quarter-over-quarter.",
+          chunk: "CHUNK_0734_B1",
+          index: "Qdrant / collection:financial_filings"
+        }
+      ]
+    },
+    "AI Regulatory Audit": {
+      title: "EU AI Act Compliance Audit",
+      query: "Does PAIDI meet EU AI Act Tier 2 requirements for high-risk document extraction?",
+      response: "Yes. PAIDI conforms to **EU AI Act Article 14 (Human Oversight)** and **Article 10 (Data Governance)** requirements [DOC-05 §A14]. All retrieval vectors are strictly air-gapped on private dedicated clusters with deterministic audit logging and zero telemetry egress [DOC-05 §A10].",
+      sources: [
+        {
+          id: "DOC-05",
+          name: "EU_AI_Act_Compliance_Audit_2026.pdf",
+          loc: "Article 14 Assessment · Page 7",
+          score: "0.978 COSINE",
+          text: "Article 14 Human Oversight Verification. System provides interactive citation provenance, bounding-box ground truth verification, and real-time operator intervention prior to downstream report synthesis.",
+          chunk: "CHUNK_0290_E7",
+          index: "Qdrant / collection:compliance"
+        }
+      ]
+    }
+  };
+
+  function loadSession(sessionKey) {
+    const session = sampleCorpus[sessionKey];
+    if (!session) return;
+    
+    // Update session title
+    const headerTitle = document.querySelector('section .font-headline-sm');
+    if (headerTitle) headerTitle.innerText = session.title;
+
+    // Update conversation messages
+    const chatContainer = document.querySelector('section .overflow-y-auto');
+    if (chatContainer) {
+      chatContainer.innerHTML = `
+        <div class="flex flex-col gap-6 p-6 max-w-4xl mx-auto w-full">
+          <!-- User Query -->
+          <div class="flex items-start gap-3.5 self-end max-w-2xl">
+            <div class="flex flex-col items-end gap-1">
+              <div class="px-4 py-3 rounded-2xl rounded-tr-none bg-primary-container text-on-primary-container font-body-md shadow-sm">
+                ${session.query}
+              </div>
+              <span class="font-label-sm text-label-sm text-outline px-1">Just now</span>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-xs flex-shrink-0">T</div>
+          </div>
+
+          <!-- AI Response -->
+          <div class="flex items-start gap-3.5 self-start max-w-3xl w-full">
+            <div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center flex-shrink-0 text-primary">
+              <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+            </div>
+            <div class="flex flex-col gap-3 flex-1">
+              <div class="p-5 rounded-2xl rounded-tl-none bg-surface-container-low border border-outline-variant/30 text-on-surface font-body-md leading-relaxed shadow-sm">
+                ${session.response.replace(/\n\n/g, '<br><br>').replace(/\[DOC-([0-9]+) §([0-9.]+)\]/g, '<span onclick="highlightSource(\'DOC-$1\')" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-primary/20 text-primary hover:bg-primary/30 cursor-pointer mx-0.5 border border-primary/30 transition-colors"><span class="material-symbols-outlined text-[12px]">link</span>DOC-$1 §$2</span>')}
+              </div>
+
+              <!-- Action Bar -->
+              <div class="flex items-center gap-2 px-1">
+                <button onclick="copyResponse(this)" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+                  <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                  <span>Copy</span>
+                </button>
+                <button onclick="showToast('Response flagged as accurate', 'success')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-tertiary text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+                  <span class="material-symbols-outlined text-[14px]">thumb_up</span>
+                  <span>Accurate</span>
+                </button>
+                <button onclick="showToast('Feedback submitted to evaluation pool', 'info')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-error text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+                  <span class="material-symbols-outlined text-[14px]">thumb_down</span>
+                </button>
+                <div class="ml-auto flex items-center gap-1.5 text-label-sm text-tertiary">
+                  <span class="material-symbols-outlined text-[14px]">verified</span>
+                  <span>98.2% Grounded</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Populate Right Inspector with first source
+    if (session.sources && session.sources.length > 0) {
+      const src = session.sources[0];
+      selectSource(src.name, src.loc, src.score, src.text, src.chunk, src.index);
+    }
+  }
+
+  function highlightSource(docId) {
+    showToast('Inspecting grounding reference: ' + docId, 'info');
+  }
+
+  function copyResponse(btn) {
+    showToast('AI synthesis copied to clipboard', 'success');
+  }
+
+  function selectSource(docName, loc, score, text, chunk, index) {
+    const docNameEl = document.querySelector('aside.w-80 h3, aside.w-80 .font-headline-sm');
+    if (docNameEl) docNameEl.innerText = docName;
+    const locEl = document.querySelector('aside.w-80 .font-label-sm');
+    if (locEl) locEl.innerText = loc;
+    const scoreEl = document.querySelector('aside.w-80 .text-tertiary');
+    if (scoreEl) scoreEl.innerText = score;
+    const textEl = document.querySelector('aside.w-80 p.font-body-sm');
+    if (textEl) textEl.innerText = text;
+    showToast('Loaded source chunk: ' + chunk, 'info');
+  }
+
+  // Handle incoming query from URL (?q=...)
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('q');
+    if (query) {
+      showToast('Executing private neural retrieval...', 'info');
+      setTimeout(() => {
+        loadSession("Notice & Indemnity");
+      }, 300);
+    }
+
+    // Bind session item click events
+    document.querySelectorAll('aside .space-y-1 > div').forEach(item => {
+      item.addEventListener('click', () => {
+        const title = item.querySelector('.font-headline-sm')?.innerText.trim();
+        if (title && sampleCorpus[title]) {
+          document.querySelectorAll('aside .space-y-1 > div').forEach(el => {
+            el.className = 'p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all';
+          });
+          item.className = 'p-2.5 rounded bg-surface-container-high text-on-surface cursor-pointer flex flex-col gap-1 transition-all shadow-sm';
+          loadSession(title);
+        }
+      });
+    });
+
+    // Chat prompt input enter handler
+    const chatInput = document.querySelector('footer input[type="text"], section input[type="text"]:last-of-type');
+    if (chatInput) {
+      chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && chatInput.value.trim()) {
+          const userText = chatInput.value.trim();
+          chatInput.value = '';
+          showToast('Querying vector vault...', 'info');
+          setTimeout(() => {
+            loadSession("Notice & Indemnity");
+            showToast('Response synthesized with 3 verified citations', 'success');
+          }, 600);
+        }
+      });
+    }
+  });
+</script>
+
+</body></html>
