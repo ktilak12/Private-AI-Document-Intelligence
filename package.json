@@ -1,0 +1,13 @@
+{
+  "name": "paidi-ui",
+  "version": "1.0.0",
+  "description": "Private AI Document Intelligence System UI",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": ["ai", "document-intelligence", "rag", "stitch", "ui"],
+  "author": "Tilak",
+  "license": "ISC"
+}

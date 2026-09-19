@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="10" fill="#0F172A"/>
+  <rect x="1.5" y="1.5" width="37" height="37" rx="8.5" stroke="#334155" stroke-width="1"/>
+  <!-- Document silhouette -->
+  <path d="M12 11C12 9.89543 12.8954 9 14 9H23L29 15V29C29 30.1046 28.1046 31 27 31H14C12.8954 31 12 30.1046 12 29V11Z" fill="#1E293B" stroke="#475569" stroke-width="1.2"/>
+  <path d="M23 9V15H29" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- AI Spark / Intelligence Vector -->
+  <path d="M19 17L20.2 20.2L23.4 21.4L20.2 22.6L19 25.8L17.8 22.6L14.6 21.4L17.8 20.2L19 17Z" fill="#6366F1"/>
+  <circle cx="25" cy="25" r="1.5" fill="#38BDF8"/>
+</svg>
