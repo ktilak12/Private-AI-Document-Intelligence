@@ -612,6 +612,9 @@
     });
   }
 </script></main></div>
+<!-- Global API Client -->
+<script src="api-client.js"></script>
+
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
   <div class="bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
@@ -748,19 +751,12 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
 
 
 <script>
-  // Document Search & Real-time Filter
+  // Filter table in real-time
   function filterDocuments(query) {
-    const rows = document.querySelectorAll('tbody tr, .document-grid-item');
+    const rows = document.querySelectorAll('tbody tr');
     const q = query.toLowerCase();
-    let matchCount = 0;
     rows.forEach(r => {
-      const text = r.innerText.toLowerCase();
-      if (text.includes(q)) {
-        r.style.display = '';
-        matchCount++;
-      } else {
-        r.style.display = 'none';
-      }
+      r.style.display = r.innerText.toLowerCase().includes(query) ? '' : 'none';
     });
   }
 
@@ -769,7 +765,59 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     docSearch.addEventListener('input', (e) => filterDocuments(e.target.value));
   }
 
-  // File Upload Ingestion Modal & Simulation
+  // Render Live Documents Table from API
+  async function refreshDocumentTable() {
+    if (!window.PaidiApi) return;
+    try {
+      const docs = await window.PaidiApi.getDocuments();
+      const tbody = document.querySelector('table tbody');
+      if (!tbody || docs.length === 0) return;
+
+      tbody.innerHTML = docs.map(doc => `
+        <tr class="hover:bg-surface-container/50 border-b border-outline-variant/20 transition-colors">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary text-[20px]">description</span>
+              <div class="flex flex-col">
+                <span class="font-body-md text-on-surface font-medium">${doc.filename}</span>
+                <span class="font-label-sm text-outline">ID: ${doc.id}</span>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3 font-code-citation text-code-citation text-on-surface-variant">${doc.fileType || 'PDF'}</td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary/15 text-tertiary border border-tertiary/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              <span>Ready & Indexed</span>
+            </span>
+          </td>
+          <td class="px-4 py-3 font-code-citation text-code-citation text-primary">${doc.totalChunks || 1} CHUNKS</td>
+          <td class="px-4 py-3 font-code-citation text-code-citation text-outline">~${doc.totalTokensApprox || 500} TOKENS</td>
+          <td class="px-4 py-3 text-right">
+            <button onclick="handleDeleteDocument('${doc.id}')" class="text-on-surface-variant hover:text-error p-1.5 rounded hover:bg-surface-container-high transition-colors" title="Delete document">
+              <span class="material-symbols-outlined text-[18px]">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (err) {
+      console.warn('Failed to refresh table:', err);
+    }
+  }
+
+  // Delete Document
+  async function handleDeleteDocument(id) {
+    if (!confirm('Are you sure you want to remove this document from the vector vault?')) return;
+    try {
+      await window.PaidiApi.deleteDocument(id);
+      showToast('Document deleted from knowledge base', 'info');
+      refreshDocumentTable();
+    } catch (err) {
+      showToast('Failed to delete document', 'error');
+    }
+  }
+
+  // Upload Modal & Live Upload
   function triggerUploadModal() {
     showUploadModal();
   }
@@ -792,23 +840,22 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
           <div id="drop-area" class="border-2 border-dashed border-outline-variant/50 hover:border-primary rounded-xl p-8 flex flex-col items-center justify-center gap-3 text-center cursor-pointer transition-colors bg-surface-container-lowest/50">
             <span class="material-symbols-outlined text-primary text-[40px]">cloud_upload</span>
             <div class="flex flex-col">
-              <span class="font-body-md text-on-surface font-medium">Drag & drop files here, or browse</span>
-              <span class="font-label-sm text-on-surface-variant mt-1">Supports PDF, DOCX, TXT, JSON, MD (Max 100MB)</span>
+              <span class="font-body-md text-on-surface font-medium">Click or drag & drop files to ingest</span>
+              <span class="font-label-sm text-on-surface-variant mt-1">Supports PDF, DOCX, TXT, MD, JSON, CSV (Max 25MB)</span>
             </div>
-            <input type="file" id="file-selector" class="hidden" multiple />
+            <input type="file" id="file-selector" class="hidden" accept=".pdf,.docx,.txt,.md,.json,.csv" />
           </div>
           <div id="upload-progress" class="hidden flex flex-col gap-2 bg-surface-container-high/60 p-3.5 rounded-lg border border-outline-variant/30">
             <div class="flex items-center justify-between font-label-sm text-label-sm">
-              <span id="upload-stage" class="text-primary font-medium">Processing OCR & Layout Analysis...</span>
-              <span id="upload-percent" class="text-tertiary">42%</span>
+              <span id="upload-stage" class="text-primary font-medium">Processing File...</span>
+              <span id="upload-percent" class="text-tertiary">0%</span>
             </div>
             <div class="w-full h-2 bg-surface-container-lowest rounded-full overflow-hidden">
-              <div id="upload-bar" class="h-full bg-primary transition-all duration-300 w-[42%]"></div>
+              <div id="upload-bar" class="h-full bg-primary transition-all duration-300 w-[0%]"></div>
             </div>
           </div>
           <div class="flex items-center justify-end gap-3 pt-2">
             <button onclick="closeUploadModal()" class="px-4 py-2 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-body-md text-body-md">Cancel</button>
-            <button onclick="simulateUploadProcess()" class="px-4 py-2 rounded bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-body-md text-body-md font-medium">Start Ingestion</button>
           </div>
         </div>
       `;
@@ -818,10 +865,21 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
       const dropArea = document.getElementById('drop-area');
       const fileInput = document.getElementById('file-selector');
       dropArea.onclick = () => fileInput.click();
+
+      // Drag and drop support
+      dropArea.ondragover = (e) => { e.preventDefault(); dropArea.classList.add('border-primary'); };
+      dropArea.ondragleave = () => dropArea.classList.remove('border-primary');
+      dropArea.ondrop = (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('border-primary');
+        if (e.dataTransfer.files.length > 0) {
+          uploadFileLive(e.dataTransfer.files[0]);
+        }
+      };
+
       fileInput.onchange = () => {
         if (fileInput.files.length > 0) {
-          showToast('Selected ' + fileInput.files.length + ' file(s) for ingestion', 'info');
-          simulateUploadProcess();
+          uploadFileLive(fileInput.files[0]);
         }
       };
     } else {
@@ -838,48 +896,52 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     }
   }
 
-  function simulateUploadProcess() {
+  // Live File Ingestion Process
+  async function uploadFileLive(file) {
     const progBox = document.getElementById('upload-progress');
     const stageEl = document.getElementById('upload-stage');
     const pctEl = document.getElementById('upload-percent');
     const barEl = document.getElementById('upload-bar');
     if (!progBox) return;
+
     progBox.classList.remove('hidden');
+    stageEl.innerText = 'Transmitting to Secured Vault...';
+    pctEl.innerText = '25%';
+    barEl.style.width = '25%';
 
-    const stages = [
-      { pct: 20, text: "Extracting Layout & Semantic Boundaries..." },
-      { pct: 55, text: "Generating Dense 1536-dim Embeddings..." },
-      { pct: 85, text: "Indexing Vector Vault (HNSW Cosine)..." },
-      { pct: 100, text: "Ingestion & Verification Complete!" }
-    ];
+    try {
+      setTimeout(() => {
+        stageEl.innerText = 'Executing OCR & Semantic Boundary Chunking...';
+        pctEl.innerText = '65%';
+        barEl.style.width = '65%';
+      }, 400);
 
-    let current = 0;
-    const interval = setInterval(() => {
-      if (current >= stages.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          closeUploadModal();
-          showToast('Document successfully indexed and verified!', 'success');
-        }, 600);
-        return;
-      }
-      const st = stages[current];
-      pctEl.innerText = st.pct + '%';
-      stageEl.innerText = st.text;
-      barEl.style.width = st.pct + '%';
-      current++;
-    }, 500);
+      const res = await window.PaidiApi.uploadDocument(file);
+
+      stageEl.innerText = 'Generating Embeddings & HNSW Vector Index...';
+      pctEl.innerText = '100%';
+      barEl.style.width = '100%';
+
+      setTimeout(() => {
+        closeUploadModal();
+        showToast('Document "' + file.name + '" indexed into ' + (res.document?.totalChunks || 'multiple') + ' chunks!', 'success');
+        refreshDocumentTable();
+      }, 500);
+    } catch (err) {
+      stageEl.innerText = 'Failed: ' + err.message;
+      showToast('Ingestion Error: ' + err.message, 'error');
+    }
   }
 
-  // Bind upload buttons
+  // Bind upload triggers
   document.querySelectorAll('button').forEach(b => {
     if (b.innerText.includes('Upload') || b.innerText.includes('Add Document')) {
       b.onclick = triggerUploadModal;
     }
   });
 
-  // Check URL query parameters for ?action=upload
   window.addEventListener('DOMContentLoaded', () => {
+    refreshDocumentTable();
     const params = new URLSearchParams(window.location.search);
     if (params.get('action') === 'upload') {
       setTimeout(triggerUploadModal, 200);
