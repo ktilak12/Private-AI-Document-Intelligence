@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = __dirname;
+const baseDir = path.resolve(__dirname, '..');
 const rawDir = path.join(baseDir, '_stitch_raw');
 
 // Define the pages to process

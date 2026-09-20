@@ -14,7 +14,8 @@ build/
 
 # Uploaded documents & temporary files
 uploads/
-backend/uploads/
+backend/uploads/*
+!backend/uploads/.gitkeep
 *.log
 npm-debug.log*
 

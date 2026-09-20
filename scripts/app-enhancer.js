@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = __dirname;
+const baseDir = path.resolve(__dirname, '..');
 
 // 1. Enhance index.html / dashboard.html
 function enhanceDashboard(content) {
