@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database with pgvector Extension
+  db:
+    image: ankane/pgvector:latest
+    container_name: paidi-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: paidi_user
+      POSTGRES_PASSWORD: paidi_password
+      POSTGRES_DB: paidi_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paidi_user -d paidi_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Node.js & Express RAG Backend API
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: paidi-api
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      DATABASE_URL: "postgresql://paidi_user:paidi_password@db:5432/paidi_db?schema=public"
+      JWT_SECRET: "paidi-enterprise-production-jwt-secret-key-32-chars-min"
+      ALLOWED_ORIGINS: "http://localhost,http://localhost:80,http://localhost:3000,http://localhost:8080"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+    ports:
+      - "3000:3000"
+    volumes:
+      - api-uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 3. Nginx High-Performance Web Frontend & Reverse Proxy
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: paidi-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  api-uploads:
