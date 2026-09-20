@@ -531,6 +531,9 @@
     });
   </script>
 </div></main></div>
+<!-- Global API Client -->
+<script src="api-client.js"></script>
+
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
   <div class="bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
@@ -667,7 +670,7 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
 
 
 <script>
-  // Dashboard Specific Interactivity
+  // Dashboard Specific Interactivity & Live Connectivity
   function setScope(scopeName) {
     const scopeText = document.getElementById('scope-text');
     if (scopeText) scopeText.innerText = 'Scope: ' + scopeName;
@@ -716,7 +719,7 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     });
   }
 
-  // Bind Ask AI button
+  // Bind Ask AI buttons
   document.querySelectorAll('button').forEach(btn => {
     if (btn.innerText.includes('Ask AI')) {
       btn.onclick = submitDashboardQuery;
@@ -726,6 +729,17 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     }
     if (btn.innerText.includes('Upload Documents')) {
       btn.onclick = () => window.location.href = 'documents.html?action=upload';
+    }
+  });
+
+  // Check live backend health on dashboard
+  window.addEventListener('DOMContentLoaded', async () => {
+    if (window.PaidiApi) {
+      const isLive = await window.PaidiApi.checkHealth();
+      const statusPill = document.querySelector('header .animate-pulse')?.parentElement;
+      if (statusPill && isLive) {
+        statusPill.innerHTML = '<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><span class="font-label-sm text-label-sm text-tertiary hidden lg:inline">Backend RAG Online (PostgreSQL)</span>';
+      }
     }
   });
 </script>
