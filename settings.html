@@ -658,8 +658,9 @@
     }
   </script>
 </div></main></div>
-<!-- Global API Client -->
+<!-- Global API Client & App Controller -->
 <script src="api-client.js"></script>
+<script src="app.js"></script>
 
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
@@ -700,9 +701,9 @@
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
         <span>Summarize termination covenants with financial liability</span>
       </div>
-      <div onclick="executeCommandQuery('Extract compliance deadlines for Q3 2026')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+      <div onclick="executeCommandQuery('Explain the cryptographic key rotation schedule and enclave security standards')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
-        <span>Extract compliance deadlines for Q3 2026</span>
+        <span>Explain the cryptographic key rotation schedule and enclave security standards</span>
       </div>
     </div>
   </div>
@@ -793,29 +794,6 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     }
   });
 });
-</script>
-
-
-<script>
-  function testVectorConnection() {
-    showToast('Testing vector connection to PostgreSQL (pgvector)...', 'info');
-    setTimeout(() => {
-      showToast('pgvector extension active! Latency: 8ms (HNSW Index Ready)', 'success');
-    }, 600);
-  }
-
-  function saveSettingsConfig() {
-    showToast('Security and model configurations applied workspace-wide', 'success');
-  }
-
-  document.querySelectorAll('button').forEach(btn => {
-    if (btn.innerText.includes('Test Connection') || btn.innerText.includes('Ping')) {
-      btn.onclick = testVectorConnection;
-    }
-    if (btn.innerText.includes('Save') || btn.innerText.includes('Apply Changes')) {
-      btn.onclick = saveSettingsConfig;
-    }
-  });
 </script>
 
 </body></html>

@@ -24,53 +24,7 @@
 </div>
 </div>
 <!-- Session List -->
-<div class="flex-1 overflow-y-auto px-2 space-y-1">
-<!-- Session Item: Active -->
-<div class="p-2.5 rounded bg-surface-container-high text-on-surface cursor-pointer flex flex-col gap-1 transition-all shadow-sm">
-<div class="flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm truncate text-primary leading-tight">Notice & Indemnity</span>
-<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Termination conditions & severance</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container-lowest text-tertiary">3 SOURCES</span>
-<span class="font-label-sm text-label-sm text-outline">Just now</span>
-</div>
-</div>
-<!-- Session Item -->
-<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm truncate leading-tight">Q4 Guidance Analysis</span>
-<span class="font-label-sm text-label-sm text-outline">1d</span>
-</div>
-<p class="font-body-sm text-body-sm text-outline truncate">Revenue margins & cash burn</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">12 SOURCES</span>
-</div>
-</div>
-<!-- Session Item -->
-<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm truncate leading-tight">AI Regulatory Audit</span>
-<span class="font-label-sm text-label-sm text-outline">Sep 14</span>
-</div>
-<p class="font-body-sm text-body-sm text-outline truncate">EU AI Act Tier 2 validation</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">8 SOURCES</span>
-</div>
-</div>
-<!-- Session Item -->
-<div class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm truncate leading-tight">Vendor SLA Comparison</span>
-<span class="font-label-sm text-label-sm text-outline">Sep 12</span>
-</div>
-<p class="font-body-sm text-body-sm text-outline truncate">Tier-3 datacenter uptimes</p>
-<div class="flex items-center gap-2 mt-1">
-<span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container text-outline">4 SOURCES</span>
-</div>
-</div>
-</div>
+<div id="sessions-container" class="flex-1 overflow-y-auto px-2 space-y-1"></div>
 <!-- Scope Metadata Summary Footer -->
 <div class="p-3 bg-surface-container-low m-2 rounded flex flex-col gap-2">
 <div class="flex items-center justify-between">
@@ -105,140 +59,7 @@
 </div>
 </div>
 <!-- Dialogue History Canvas -->
-<div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
-<!-- Human Prompt Context Unit -->
-<div class="flex justify-end items-start gap-3 pl-12">
-<div class="flex flex-col items-end gap-1.5 max-w-2xl">
-<div class="p-4 rounded bg-surface-container-high text-on-surface shadow-sm">
-<p class="font-body-md text-body-md">What is the required termination notice period, and does severance pay apply if termination is initiated without cause?</p>
-</div>
-<div class="flex items-center gap-2 font-label-sm text-label-sm text-outline px-1">
-<span>Tilak (Lead Researcher)</span>
-<span>·</span>
-<span>10:42 AM</span>
-<span class="material-symbols-outlined text-[14px] text-tertiary">done_all</span>
-</div>
-</div>
-</div>
-<!-- Assistant Synthesized Response Unit -->
-<div class="flex items-start gap-4 pr-12">
-<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
-<span class="material-symbols-outlined text-[18px]">psychology</span>
-</div>
-<div class="flex flex-col gap-4 flex-1 max-w-3xl">
-<div class="p-5 rounded bg-surface-container-low text-on-surface shadow-sm space-y-4">
-<div class="flex items-center justify-between pb-3 bg-surface-container-lowest/30 p-2.5 rounded">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
-<span class="font-label-md text-label-md font-semibold text-on-surface">Verified Enterprise Synthesis</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-code-citation text-code-citation px-2 py-0.5 rounded bg-surface-container-highest text-tertiary">96.4% CONFIDENCE</span>
-<span class="font-code-citation text-code-citation text-outline">LATENCY: 412ms</span>
-</div>
-</div>
-<div class="font-body-lg text-body-lg text-on-surface leading-relaxed space-y-3">
-<p>Based on your verified repository corpora, the contractual conditions for separation are strictly defined under corporate covenant:</p>
-<div class="p-3.5 rounded bg-surface-container flex flex-col gap-2">
-<div class="flex items-start gap-2">
-<span class="font-headline-sm text-headline-sm text-primary">1.</span>
-<div>
-<strong class="text-on-surface font-headline-sm text-headline-sm">Notice Period:</strong>
-<span class="text-on-surface-variant font-body-md text-body-md"> The covenant mandates an absolute baseline of <strong class="text-on-surface">thirty (30) calendar days prior written notice</strong> for standard bilateral separations initiated by either entity.</span>
-<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-primary/10 hover:bg-primary/20 text-primary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(1)" type="button">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-<span>SRC 1 §8.2</span>
-</button>
-<span class="text-on-surface-variant font-body-md text-body-md"> In the scenario of involuntary non-fault displacement, notice execution must be conducted concurrently with an executive exit protocol.</span>
-<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-secondary-container/20 hover:bg-secondary-container/30 text-secondary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(3)" type="button">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span>SRC 3 §3.1</span>
-</button>
-</div>
-</div>
-</div>
-<div class="p-3.5 rounded bg-surface-container flex flex-col gap-2">
-<div class="flex items-start gap-2">
-<span class="font-headline-sm text-headline-sm text-primary">2.</span>
-<div>
-<strong class="text-on-surface font-headline-sm text-headline-sm">Severance Eligibility:</strong>
-<span class="text-on-surface-variant font-body-md text-body-md"> When terminated without cause, the subject qualifies for statutory continuation equivalent to <strong class="text-on-surface">two (2) months of standard baseline remuneration</strong>. Disbursement remains conditioned upon full receipt of an unencumbered general liability release executed within 21 calendar days.</span>
-<button class="inline-flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-primary/10 hover:bg-primary/20 text-primary font-code-citation text-code-citation transition-colors align-baseline" onclick="highlightCitation(2)" type="button">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-<span>SRC 2 §8.4</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Interactive Citation Strip -->
-<div class="pt-3 flex flex-col gap-2.5">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Grounded Evidentiary Attribution (3 Records)</span>
-<span class="font-code-citation text-code-citation text-tertiary">Cryptographically Signed Hash</span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-<!-- Citation Micro-Card 1: Active Focus -->
-<div class="p-2.5 rounded bg-surface-container-high hover:bg-surface-container-highest cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-1" onclick="selectSource('Employment_Contract.pdf', 'Page 14 · §8.2', '96.4%', 'Section 8.2 — Notice of Separation. Either party may terminate this employment relationship at any time by providing not less than thirty (30) days prior written notice to the other party. During such 30-day period, the Executive shall continue to render services in accordance with standard fiduciary duty.', '#chk_89a24d', 1)">
-<div class="flex items-center justify-between">
-<span class="font-code-citation text-code-citation text-primary">SRC 1 · PAGE 14</span>
-<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface truncate">Employment_Contract.pdf</span>
-<p class="font-body-sm text-body-sm text-outline truncate">"...thirty (30) days prior written notice..."</p>
-</div>
-<!-- Citation Micro-Card 2 -->
-<div class="p-2.5 rounded bg-surface-container hover:bg-surface-container-high cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-2" onclick="selectSource('Employment_Contract.pdf', 'Page 15 · §8.4', '94.8%', 'Section 8.4 — Involuntary Termination Severance. Subject to the execution of a definitive release of claims within 21 days following separation, Company shall furnish severance equivalent to two (2) months base salary payable via bi-weekly intervals.', '#chk_91b72e', 2)">
-<div class="flex items-center justify-between">
-<span class="font-code-citation text-code-citation text-on-surface-variant">SRC 2 · PAGE 15</span>
-<span class="material-symbols-outlined text-[14px] text-outline">verified</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface truncate">Employment_Contract.pdf</span>
-<p class="font-body-sm text-body-sm text-outline truncate">"...two (2) months base remuneration..."</p>
-</div>
-<!-- Citation Micro-Card 3 -->
-<div class="p-2.5 rounded bg-surface-container hover:bg-surface-container-high cursor-pointer flex flex-col gap-1 transition-all" id="cit-card-3" onclick="selectSource('Company_Policy_Handbook.docx', 'Page 7 · §3.1', '91.2%', 'Section 3.1 — Executive Separation Briefing. For unprompted non-fault involuntary transitions, People Operations and Legal Counsel shall convene an Exit Strategy Conference immediately concurrent with notice dispatch.', '#chk_14c88f', 3)">
-<div class="flex items-center justify-between">
-<span class="font-code-citation text-code-citation text-on-surface-variant">SRC 3 · PAGE 07</span>
-<span class="material-symbols-outlined text-[14px] text-outline">verified</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface truncate">Company_Policy_Handbook.docx</span>
-<p class="font-body-sm text-body-sm text-outline truncate">"...executive exit briefing protocols..."</p>
-</div>
-</div>
-</div>
-<!-- Post-Response Utility Bar -->
-<div class="flex items-center justify-between pt-3 text-outline font-label-sm text-label-sm">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[14px]">content_copy</span>
-<span>Copy Text</span>
-</button>
-<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
-<span>Export Memo</span>
-</button>
-<button class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-highest hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[14px]">flag</span>
-<span>Flag Variance</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">thumb_up</span>
-</button>
-<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">thumb_down</span>
-</button>
-<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">refresh</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div id="chat-messages" class="flex-1 overflow-y-auto px-6 py-6 space-y-6"></div>
 <!-- Bottom Pinned Command Prompt -->
 <div class="p-4 bg-surface-container-lowest/90 backdrop-blur flex flex-col gap-2 z-20">
 <div class="flex items-center justify-between px-1">
@@ -289,14 +110,14 @@
 <div class="flex items-start gap-2.5">
 <span class="material-symbols-outlined text-primary text-[24px]">description</span>
 <div class="flex flex-col min-w-0 flex-1">
-<span class="font-headline-sm text-headline-sm text-on-surface truncate font-medium" id="inspect-doc">Employment_Contract.pdf</span>
-<span class="font-code-citation text-code-citation text-outline" id="inspect-loc">Page 14 · §8.2 (Notice of Separation)</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate font-medium" id="inspect-doc">No Reference Selected</span>
+<span class="font-code-citation text-code-citation text-outline" id="inspect-loc">Click any citation [1], [2]</span>
 </div>
 </div>
 <div class="grid grid-cols-2 gap-2 pt-2 bg-surface-container-lowest/40 p-2 rounded">
 <div class="flex flex-col">
 <span class="font-label-sm text-label-sm text-outline">Semantic Relevance</span>
-<span class="font-code-citation text-code-citation text-tertiary font-semibold" id="inspect-score">96.4% Similarity</span>
+<span class="font-code-citation text-code-citation text-tertiary font-semibold" id="inspect-score">--% Similarity</span>
 </div>
 <div class="flex flex-col">
 <span class="font-label-sm text-label-sm text-outline">Ingest Timestamp</span>
@@ -312,9 +133,7 @@
 </div>
 <div class="p-3.5 rounded bg-surface-container-low text-on-surface leading-relaxed relative">
 <div class="w-1 absolute left-0 top-0 bottom-0 bg-primary rounded-l"></div>
-<p class="font-body-md text-body-md italic text-on-surface-variant" id="inspect-text">
-                "Section 8.2 — Notice of Separation. Either party may terminate this employment relationship at any time by providing not less than thirty (30) days prior written notice to the other party. During such 30-day period, the Executive shall continue to render services in accordance with standard fiduciary duty."
-              </p>
+<p class="font-body-md text-body-md italic text-on-surface-variant" id="inspect-text">Select any citation badge [1], [2] in an answer to inspect verified source chunk text, similarity match score, and chunk coordinate.</p>
 </div>
 </div>
 <!-- Document Visual Mini-Locator -->
@@ -346,7 +165,7 @@
 <div class="space-y-1 font-code-citation text-code-citation">
 <div class="flex justify-between">
 <span class="text-outline">Chunk Vector ID:</span>
-<span class="text-on-surface" id="inspect-chunk">#chk_89a24d</span>
+<span class="text-on-surface" id="inspect-chunk">--</span>
 </div>
 <div class="flex justify-between">
 <span class="text-outline">Embedding Model:</span>
@@ -409,8 +228,9 @@
     }
   }
 </script></main></div>
-<!-- Global API Client -->
+<!-- Global API Client & App Controller -->
 <script src="api-client.js"></script>
+<script src="app.js"></script>
 
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
@@ -451,9 +271,9 @@
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
         <span>Summarize termination covenants with financial liability</span>
       </div>
-      <div onclick="executeCommandQuery('Extract compliance deadlines for Q3 2026')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+      <div onclick="executeCommandQuery('Explain the cryptographic key rotation schedule and enclave security standards')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
-        <span>Extract compliance deadlines for Q3 2026</span>
+        <span>Explain the cryptographic key rotation schedule and enclave security standards</span>
       </div>
     </div>
   </div>
@@ -544,177 +364,6 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     }
   });
 });
-</script>
-
-
-<script>
-  // Global Citation Registry for Interactive Inspector
-  window.currentCitations = [];
-
-  /**
-   * Inspector display for selected citation
-   */
-  window.inspectSource = function(citeId) {
-    const cite = window.currentCitations.find(c => c.id === citeId);
-    if (!cite) return;
-
-    const docNameEl = document.querySelector('aside.w-80 h3, aside.w-80 .font-headline-sm');
-    if (docNameEl) docNameEl.innerText = cite.filename;
-
-    const locEl = document.querySelector('aside.w-80 .font-label-sm');
-    if (locEl) locEl.innerText = 'Page ' + (cite.pageNumber || 1) + ' · Chunk ' + (cite.chunkId || '01');
-
-    const scoreEl = document.querySelector('aside.w-80 .text-tertiary');
-    if (scoreEl) scoreEl.innerText = cite.relevanceScore + '% MATCH';
-
-    const textEl = document.querySelector('aside.w-80 p.font-body-sm');
-    if (textEl) {
-      textEl.innerHTML = '<span class="bg-primary/20 text-primary-fixed border-b border-primary/50 font-medium px-1">' + cite.snippet + '</span>';
-    }
-
-    showToast('Inspecting grounding reference: ' + cite.filename + ' (Page ' + (cite.pageNumber || 1) + ')', 'info');
-  };
-
-  /**
-   * Executes live query against the PAIDI RAG API
-   */
-  async function executeRAGQuery(queryText) {
-    const chatContainer = document.querySelector('section .overflow-y-auto');
-    if (!chatContainer) return;
-
-    // Append User Message
-    const userMsgHtml = `
-      <div class="flex items-start gap-3.5 self-end max-w-2xl animate-in fade-in slide-in-from-bottom-2 duration-200">
-        <div class="flex flex-col items-end gap-1">
-          <div class="px-4 py-3 rounded-2xl rounded-tr-none bg-primary-container text-on-primary-container font-body-md shadow-sm">
-            ${queryText}
-          </div>
-          <span class="font-label-sm text-label-sm text-outline px-1">Just now</span>
-        </div>
-        <div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-xs flex-shrink-0">T</div>
-      </div>
-    `;
-
-    // Append Loading State
-    const loadingId = 'ai-loading-' + Date.now();
-    const loadingHtml = `
-      <div id="${loadingId}" class="flex items-start gap-3.5 self-start max-w-3xl w-full animate-in fade-in duration-200">
-        <div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center flex-shrink-0 text-primary animate-pulse">
-          <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
-        </div>
-        <div class="p-4 rounded-2xl rounded-tl-none bg-surface-container-low border border-outline-variant/30 flex items-center gap-3 text-on-surface-variant font-label-md">
-          <span class="material-symbols-outlined text-[18px] animate-spin text-primary">sync</span>
-          <span>Searching vector vault & synthesizing grounded answer...</span>
-        </div>
-      </div>
-    `;
-
-    const wrapper = chatContainer.querySelector('.flex.flex-col.gap-6') || chatContainer;
-    wrapper.insertAdjacentHTML('beforeend', userMsgHtml);
-    wrapper.insertAdjacentHTML('beforeend', loadingHtml);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    try {
-      // Call Live Backend API via PaidiApi
-      const res = await window.PaidiApi.queryRAG(queryText);
-      const loadingEl = document.getElementById(loadingId);
-      if (loadingEl) loadingEl.remove();
-
-      window.currentCitations = res.citations || [];
-
-      // Format grounded answer with clickable citations
-      let formattedAnswer = res.answer.replace(/\n\n/g, '<br><br>');
-
-      // Replace [1], [2] or citations with interactive inspector buttons
-      if (res.citations && res.citations.length > 0) {
-        res.citations.forEach((cite, idx) => {
-          const regex = new RegExp('\\[' + (idx + 1) + '\\]', 'g');
-          const citeBadge = `<button onclick="window.inspectSource('${cite.id}')" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary/20 text-primary border border-primary/40 hover:bg-primary/30 transition-colors mx-1 cursor-pointer font-bold" title="Click to view verified source snippet"><span class="material-symbols-outlined text-[12px]">link</span>[${idx + 1}] ${cite.filename.slice(0, 16)}...</button>`;
-          formattedAnswer = formattedAnswer.replace(regex, citeBadge);
-        });
-      }
-
-      const confPct = Math.round((res.confidence || 0.94) * 100);
-      const faithPct = Math.round(((res.evaluationMetrics?.faithfulness) || 0.95) * 100);
-
-      const aiMsgHtml = `
-        <div class="flex items-start gap-3.5 self-start max-w-3xl w-full animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center flex-shrink-0 text-primary shadow-sm">
-            <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
-          </div>
-          <div class="flex flex-col gap-3 flex-1">
-            <div class="p-5 rounded-2xl rounded-tl-none bg-surface-container-low border border-outline-variant/30 text-on-surface font-body-md leading-relaxed shadow-sm">
-              ${formattedAnswer}
-            </div>
-
-            <!-- Action Bar & Grounding Telemetry -->
-            <div class="flex items-center gap-2 px-1 flex-wrap">
-              <button onclick="navigator.clipboard.writeText('${res.answer.replace(/'/g, "\\\'")}'); showToast('Copied to clipboard', 'success');" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
-                <span class="material-symbols-outlined text-[14px]">content_copy</span>
-                <span>Copy</span>
-              </button>
-              <button onclick="showToast('Answer marked as accurate', 'success')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-tertiary text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
-                <span class="material-symbols-outlined text-[14px]">thumb_up</span>
-                <span>Accurate</span>
-              </button>
-              <div class="ml-auto flex items-center gap-2">
-                <div class="flex items-center gap-1 text-label-sm text-tertiary bg-tertiary/10 px-2 py-0.5 rounded border border-tertiary/20">
-                  <span class="material-symbols-outlined text-[14px]">verified</span>
-                  <span>${confPct}% Grounded</span>
-                </div>
-                <span class="font-code-citation text-code-citation text-outline">Faithfulness: ${faithPct}%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      wrapper.insertAdjacentHTML('beforeend', aiMsgHtml);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-
-      // Automatically inspect first citation in right drawer
-      if (res.citations && res.citations.length > 0) {
-        window.inspectSource(res.citations[0].id);
-      }
-
-      showToast('Grounded answer synthesized with ' + (res.citations?.length || 0) + ' verified citations', 'success');
-    } catch (err) {
-      const loadingEl = document.getElementById(loadingId);
-      if (loadingEl) loadingEl.remove();
-      showToast('Error: ' + err.message, 'error');
-    }
-  }
-
-  // Handle URL Query or User Typing
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('q');
-    if (query) {
-      setTimeout(() => executeRAGQuery(query), 300);
-    }
-
-    // Bind Chat Input Enter key
-    const chatInput = document.querySelector('footer input[type="text"], section input[type="text"]:last-of-type');
-    if (chatInput) {
-      chatInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && chatInput.value.trim()) {
-          const text = chatInput.value.trim();
-          chatInput.value = '';
-          executeRAGQuery(text);
-        }
-      });
-    }
-
-    // Bind session item click events
-    document.querySelectorAll('aside .space-y-1 > div').forEach(item => {
-      item.addEventListener('click', () => {
-        const title = item.querySelector('.font-headline-sm')?.innerText.trim();
-        if (title) {
-          executeRAGQuery('Provide an executive summary of ' + title);
-        }
-      });
-    });
-  });
 </script>
 
 </body></html>

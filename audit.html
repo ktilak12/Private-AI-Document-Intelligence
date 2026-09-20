@@ -80,89 +80,7 @@
 </div>
 <span class="font-code-citation text-code-citation text-on-surface-variant">3 ENCLAVE ANCHORS</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-<!-- Pinned Card 1 -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col justify-between group cursor-pointer">
-<div class="flex flex-col gap-2.5">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-code-citation text-code-citation font-semibold flex items-center gap-1.5">
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 96.4% CONFIDENCE
-              </span>
-<span class="font-code-citation text-code-citation text-on-surface-variant">10:42 AM Today</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
-              Notice of Separation &amp; Indemnity Liabilities
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Cross-examination of Section 8.2 indemnity covenants against accelerated unvested equity rights in termination scenarios.
-            </p>
-</div>
-<div class="mt-4 pt-3 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
-<span class="font-code-citation text-code-citation text-on-surface truncate max-w-[140px]">Employment_Contract.pdf §8.2</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="font-code-citation text-code-citation text-secondary">3 sources</span>
-<span class="material-symbols-outlined text-primary text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
-</div>
-</div>
-</div>
-<!-- Pinned Card 2 -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col justify-between group cursor-pointer">
-<div class="flex flex-col gap-2.5">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-code-citation text-code-citation font-semibold flex items-center gap-1.5">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> MULTI-SOURCE RECON
-              </span>
-<span class="font-code-citation text-code-citation text-on-surface-variant">Yesterday</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
-              Q4 2025 Capex &amp; Revenue Guidance Comparison
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Discrepancy audit between earnings call transcripts and 10-K consolidated capex forecasts for FY2026 infrastructure.
-            </p>
-</div>
-<div class="mt-4 pt-3 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant">analytics</span>
-<span class="font-code-citation text-code-citation text-on-surface truncate max-w-[140px]">Annual_Report_2026.pdf</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="font-code-citation text-code-citation text-secondary">12 sources</span>
-<span class="material-symbols-outlined text-primary text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
-</div>
-</div>
-</div>
-<!-- Pinned Card 3 -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col justify-between group cursor-pointer">
-<div class="flex flex-col gap-2.5">
-<div class="flex items-center justify-between">
-<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-code-citation text-code-citation font-semibold flex items-center gap-1.5">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> REGULATORY AUDIT
-              </span>
-<span class="font-code-citation text-code-citation text-on-surface-variant">Sep 14</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
-              AI Safety &amp; Regulatory Audit Compliance
-            </h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Validation of automated high-risk model registries under EU AI Act Chapter II provisions for neural reasoning pipelines.
-            </p>
-</div>
-<div class="mt-4 pt-3 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant">verified_user</span>
-<span class="font-code-citation text-code-citation text-on-surface truncate max-w-[140px]">Technical_Arch.pdf</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="font-code-citation text-code-citation text-secondary">8 sources</span>
-<span class="material-symbols-outlined text-primary text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
-</div>
-</div>
-</div>
-</div>
+<div id="audit-pinned-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </div>
 <!-- Section 3: Search, Faceted Filtering, and Sort Controls -->
 <div class="flex flex-col gap-3.5 bg-surface-container-low p-4 rounded-xl shadow-sm">
@@ -179,20 +97,20 @@
 <!-- Filter Tabs -->
 <div class="flex flex-wrap items-center gap-2" id="filter-tabs">
 <button class="px-3 py-1.5 rounded text-label-md font-label-md font-medium transition-colors bg-primary-container text-on-primary-container" onclick="toggleFilter(this)" type="button">
-            All Sessions (42)
+            All Sessions
           </button>
 <button class="px-3 py-1.5 rounded text-label-md font-label-md font-medium transition-colors bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="toggleFilter(this)" type="button">
-            Legal &amp; Compliance (18)
+            Legal &amp; Compliance
           </button>
 <button class="px-3 py-1.5 rounded text-label-md font-label-md font-medium transition-colors bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="toggleFilter(this)" type="button">
-            Financial / SEC (14)
+            Financial / SEC
           </button>
 <button class="px-3 py-1.5 rounded text-label-md font-label-md font-medium transition-colors bg-surface-container text-on-surface-variant hover:text-on-surface" onclick="toggleFilter(this)" type="button">
-            Research &amp; Technical (10)
+            Research &amp; Technical
           </button>
 <button class="px-3 py-1.5 rounded text-label-md font-label-md font-medium transition-colors bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center gap-1.5" onclick="toggleFilter(this)" type="button">
 <span class="material-symbols-outlined text-[14px] text-tertiary">bookmark</span>
-            Bookmarked (5)
+            Bookmarked
           </button>
 </div>
 <!-- Sort Menu -->
@@ -208,322 +126,7 @@
 <!-- Section 4 & 5: Tri-Pane Core Grid (Sessions Feed + Telemetry / Corpus Stats Rail) -->
 <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
 <!-- Primary Context Canvas: Chronological Sessions (xl:col-span-8) -->
-<div class="xl:col-span-8 flex flex-col gap-8 min-w-0">
-<!-- TIMELINE GROUP 1: Today -->
-<div class="flex flex-col gap-4">
-<!-- Timeline Marker Header -->
-<div class="flex items-center justify-between pb-1 border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-tertiary"></span>
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Today</h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant">4 queries recorded</span>
-</div>
-<span class="font-code-citation text-code-citation text-outline">SESSION HASH: 0x9AF8...41B</span>
-</div>
-<!-- Session Card 1 -->
-<article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3 min-w-0">
-<div class="w-8 h-8 rounded bg-surface-container-high text-primary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[20px]">chat</span>
-</div>
-<div class="flex flex-col min-w-0">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">
-                    What is the required termination notice period, and does severance pay apply if termination is initiated without cause?
-                  </h3>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">11:14 AM · Enclave Session ID #84920</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors shrink-0" title="Pin query" type="button">
-<span class="material-symbols-outlined text-[20px]">push_pin</span>
-</button>
-</div>
-<!-- Answer Snippet Container -->
-<div class="p-3.5 rounded bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
-<div class="flex items-center gap-2 mb-1.5">
-<span class="material-symbols-outlined text-tertiary text-[16px]">verified</span>
-<span class="font-label-sm text-label-sm text-tertiary font-medium">PAIDI Verified Retrieval</span>
-</div>
-<p class="text-on-surface">
-                "Based on your verified repository corpora, the covenant mandates an absolute baseline of <strong class="text-secondary font-semibold">30 calendar days</strong> written notice for mutual dissolution. If terminated without cause, Section 9.1 triggers mandatory pro-rated severance compensation equal to <strong class="text-secondary font-semibold">3 months base salary</strong> plus outstanding equity accrual calculated via Schedule C."
-              </p>
-</div>
-<!-- Metadata & Telemetry Tags -->
-<div class="flex flex-wrap items-center gap-2">
-<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-code-citation text-code-citation">
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
-<span>3 VERIFIED SOURCES</span>
-</div>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">file_present</span>
-<span>Employment_Contract.pdf</span>
-</div>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-code-citation text-code-citation">STRICT FACTUAL MODE</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-citation text-code-citation">LATENCY: 412ms</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-code-citation text-code-citation">MODEL: PAIDI-NEURAL-V3</span>
-</div>
-<!-- Action Toolbar -->
-<div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span>Resume Session</span>
-</button>
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Inspect Sources</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Copy Answer" type="button">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Share Audit Link" type="button">
-<span class="material-symbols-outlined text-[18px]">share</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="More Options" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Session Card 2 -->
-<article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3 min-w-0">
-<div class="w-8 h-8 rounded bg-surface-container-high text-primary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[20px]">chat</span>
-</div>
-<div class="flex flex-col min-w-0">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">
-                    Extract non-compete covenants and geographic exclusivity boundaries
-                  </h3>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">09:20 AM · Enclave Session ID #84902</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors shrink-0" type="button">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
-</button>
-</div>
-<div class="p-3.5 rounded bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
-<p class="text-on-surface">
-                "Section 12.4 outlines a <strong class="text-secondary font-semibold">12-month post-employment restriction</strong> covering North American operational territories, forbidding direct advisory roles for listed enterprise competitors."
-              </p>
-</div>
-<div class="flex flex-wrap items-center gap-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-citation text-code-citation">CONFIDENCE 98.1%</span>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">file_present</span>
-<span>Employment_Contract.pdf</span>
-</div>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-code-citation text-code-citation">LEGAL TAXONOMY</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-citation text-code-citation">LATENCY: 290ms</span>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span>Resume Session</span>
-</button>
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Inspect Sources</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-<!-- TIMELINE GROUP 2: Yesterday -->
-<div class="flex flex-col gap-4">
-<div class="flex items-center justify-between pb-1 border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-secondary"></span>
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Yesterday</h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant">6 queries recorded</span>
-</div>
-<span class="font-code-citation text-code-citation text-outline">SESSION HASH: 0x8C11...72E</span>
-</div>
-<!-- Session Card 3 -->
-<article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3 min-w-0">
-<div class="w-8 h-8 rounded bg-surface-container-high text-primary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[20px]">query_stats</span>
-</div>
-<div class="flex flex-col min-w-0">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">
-                    Summarize Q4 2025 operating margins vs analyst consensus
-                  </h3>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Yesterday at 4:51 PM · Enclave Session ID #84791</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors shrink-0" type="button">
-<span class="material-symbols-outlined text-[20px]">push_pin</span>
-</button>
-</div>
-<div class="p-3.5 rounded bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
-<p class="text-on-surface">
-                "Consolidated operating margin achieved <strong class="text-tertiary font-semibold">28.4%</strong> against <strong class="text-on-surface font-semibold">26.8%</strong> consensus, driven by cloud infrastructure optimization and software gross margin expansion of 140 bps."
-              </p>
-</div>
-<div class="flex flex-wrap items-center gap-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary font-code-citation text-code-citation">12 SOURCES VERIFIED</span>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">table_chart</span>
-<span>Annual_Report_2026.pdf</span>
-</div>
-<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-code-citation text-code-citation">CONFIDENCE 95.8%</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-citation text-code-citation">FINANCIAL AUDIT</span>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span>Resume Session</span>
-</button>
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Inspect Sources</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Session Card 4 -->
-<article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3 min-w-0">
-<div class="w-8 h-8 rounded bg-surface-container-high text-primary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[20px]">compare_arrows</span>
-</div>
-<div class="flex flex-col min-w-0">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">
-                    Compare liability caps across MSA and Vendor SLA agreements
-                  </h3>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Yesterday at 1:15 PM · Enclave Session ID #84729</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors shrink-0" type="button">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
-</button>
-</div>
-<div class="p-3.5 rounded bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
-<p class="text-on-surface">
-                "Master Services Agreement caps liability at <strong class="text-secondary font-semibold">2x annual contract value</strong>, whereas Vendor SLA limits indemnification to direct damages capped at the trailing 6-month aggregate fees paid."
-              </p>
-</div>
-<div class="flex flex-wrap items-center gap-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-code-citation text-code-citation">6 SOURCES</span>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">file_copy</span>
-<span>Master_Services_Agreement_2026.pdf</span>
-</div>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">file_copy</span>
-<span>Vendor_SLA.pdf</span>
-</div>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span>Resume Session</span>
-</button>
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Inspect Sources</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-<!-- TIMELINE GROUP 3: Earlier This Week -->
-<div class="flex flex-col gap-4">
-<div class="flex items-center justify-between pb-1 border-b border-surface-container-high">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Earlier this week</h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Sep 12 - Sep 14</span>
-</div>
-<span class="font-code-citation text-code-citation text-outline">ARCHIVE SEGMENT 14</span>
-</div>
-<!-- Session Card 5 -->
-<article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group">
-<div class="flex items-start justify-between gap-4">
-<div class="flex items-start gap-3 min-w-0">
-<div class="w-8 h-8 rounded bg-surface-container-high text-primary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[20px]">security</span>
-</div>
-<div class="flex flex-col min-w-0">
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium leading-snug">
-                    Zero-knowledge vector enclave verification protocol breakdown
-                  </h3>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Sep 13 · Enclave Session ID #84605</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors shrink-0" type="button">
-<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
-</button>
-</div>
-<div class="p-3.5 rounded bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed">
-<p class="text-on-surface">
-                "Client-side chunking via RecursiveToken-512 with enclave isolation on SGX Hardware verified. Embeddings are stored with ephemeral salts, neutralizing reconstruction attacks."
-              </p>
-</div>
-<div class="flex flex-wrap items-center gap-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-citation text-code-citation">4 SOURCES</span>
-<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
-<span class="material-symbols-outlined text-[14px]">code</span>
-<span>Technical_System_Architecture.pdf</span>
-</div>
-<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-citation text-code-citation">INFRA ENCLAVE</span>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">restart_alt</span>
-<span>Resume Session</span>
-</button>
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Inspect Sources</span>
-</button>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-<button class="p-1.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-</div>
+<div id="audit-timeline-container" class="xl:col-span-8 flex flex-col gap-6 min-w-0"></div>
 <!-- Auxiliary Analytical Inspector & Telemetry Rail (xl:col-span-4) -->
 <aside class="xl:col-span-4 flex flex-col gap-5 sticky top-20">
 <!-- Telemetry Metrics Card -->
@@ -581,47 +184,7 @@
 </div>
 <span class="font-code-citation text-code-citation text-on-surface-variant">RANKED BY OCCURRENCE</span>
 </div>
-<div class="flex flex-col gap-2.5">
-<!-- Citation Item 1 -->
-<div class="p-3 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between cursor-pointer">
-<div class="flex items-center gap-2.5 min-w-0">
-<span class="material-symbols-outlined text-[18px] text-primary shrink-0">picture_as_pdf</span>
-<div class="flex flex-col min-w-0">
-<span class="font-body-sm text-body-sm font-medium text-on-surface truncate">Employment_Contract.pdf</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Legal Repository · v2.1</span>
-</div>
-</div>
-<div class="flex items-center gap-2 shrink-0 ml-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-highest font-code-citation text-code-citation text-on-surface font-semibold">48 queries</span>
-</div>
-</div>
-<!-- Citation Item 2 -->
-<div class="p-3 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between cursor-pointer">
-<div class="flex items-center gap-2.5 min-w-0">
-<span class="material-symbols-outlined text-[18px] text-secondary shrink-0">table_view</span>
-<div class="flex flex-col min-w-0">
-<span class="font-body-sm text-body-sm font-medium text-on-surface truncate">Annual_Report_2026.pdf</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">SEC &amp; Financial · Verified</span>
-</div>
-</div>
-<div class="flex items-center gap-2 shrink-0 ml-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-highest font-code-citation text-code-citation text-on-surface font-semibold">34 queries</span>
-</div>
-</div>
-<!-- Citation Item 3 -->
-<div class="p-3 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between cursor-pointer">
-<div class="flex items-center gap-2.5 min-w-0">
-<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">account_tree</span>
-<div class="flex flex-col min-w-0">
-<span class="font-body-sm text-body-sm font-medium text-on-surface truncate">Technical_System_Arch.pdf</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Infra &amp; Enclaves · SGX</span>
-</div>
-</div>
-<div class="flex items-center gap-2 shrink-0 ml-2">
-<span class="px-2 py-0.5 rounded bg-surface-container-highest font-code-citation text-code-citation text-on-surface font-semibold">22 queries</span>
-</div>
-</div>
-</div>
+<div id="audit-frequent-citations" class="flex flex-col gap-2.5"></div>
 </div>
 <!-- Data Privacy Guarantee Panel -->
 <div class="p-5 rounded-xl bg-surface-container-low border-l-2 border-primary shadow-sm flex flex-col gap-3">
@@ -646,8 +209,9 @@
 </div>
 </div>
 </div></main></div>
-<!-- Global API Client -->
+<!-- Global API Client & App Controller -->
 <script src="api-client.js"></script>
+<script src="app.js"></script>
 
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
@@ -688,9 +252,9 @@
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
         <span>Summarize termination covenants with financial liability</span>
       </div>
-      <div onclick="executeCommandQuery('Extract compliance deadlines for Q3 2026')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
+      <div onclick="executeCommandQuery('Explain the cryptographic key rotation schedule and enclave security standards')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-surface-container-high hover:text-on-surface transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-[18px] text-tertiary">auto_awesome</span>
-        <span>Extract compliance deadlines for Q3 2026</span>
+        <span>Explain the cryptographic key rotation schedule and enclave security standards</span>
       </div>
     </div>
   </div>
@@ -781,71 +345,6 @@ document.querySelectorAll('header input[type="text"]').forEach(input => {
     }
   });
 });
-</script>
-
-
-<script>
-  function filterAudit(q) {
-    const rows = document.querySelectorAll('tbody tr');
-    const query = q.toLowerCase();
-    rows.forEach(r => {
-      r.style.display = r.innerText.toLowerCase().includes(query) ? '' : 'none';
-    });
-  }
-
-  const auditInput = document.querySelector('main input[placeholder*="Search"], main input[placeholder*="Filter"]');
-  if (auditInput) {
-    auditInput.addEventListener('input', (e) => filterAudit(e.target.value));
-  }
-
-  // Export Live Cryptographic Audit Report
-  async function exportAuditReport() {
-    let records = [];
-    if (window.PaidiApi) {
-      try {
-        const history = await window.PaidiApi.getHistory();
-        records = history.map((h, i) => ({
-          auditId: 'AUD-' + (1000 + i),
-          query: h.query,
-          timestamp: h.timestamp,
-          userId: h.userId || 'admin@paidi.enterprise',
-          status: 'VERIFIED_GROUNDED',
-          citationsCount: h.citations?.length || 0,
-          confidence: h.confidence
-        }));
-      } catch (err) {}
-    }
-
-    if (records.length === 0) {
-      records = [
-        { auditId: "AUD-9941", query: "Employment Notice & Indemnity", timestamp: new Date().toISOString(), userId: "admin@paidi.enterprise", status: "VERIFIED_GROUNDED", citationsCount: 2, confidence: 0.96 },
-        { auditId: "AUD-9940", query: "Key rotation schedule and encryption standard", timestamp: new Date().toISOString(), userId: "admin@paidi.enterprise", status: "VERIFIED_GROUNDED", citationsCount: 2, confidence: 0.94 }
-      ];
-    }
-
-    const auditData = {
-      exportTimestamp: new Date().toISOString(),
-      system: "PAIDI Enterprise AI Document Intelligence",
-      complianceStatus: "SAIF / SOC2 Type II Conforming",
-      totalVerifiedQueries: records.length,
-      records
-    };
-
-    const blob = new Blob([JSON.stringify(auditData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'paidi_audit_ledger_' + new Date().toISOString().slice(0, 10) + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Cryptographic audit log exported as JSON', 'success');
-  }
-
-  document.querySelectorAll('button').forEach(b => {
-    if (b.innerText.includes('Export') || b.innerText.includes('Download Log')) {
-      b.onclick = exportAuditReport;
-    }
-  });
 </script>
 
 </body></html>
