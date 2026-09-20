@@ -36,6 +36,9 @@ function normalizeNav(html, activePath) {
 
 // Build common interactive modal & command palette injection
 const commonEnhancements = `
+<!-- Global API Client -->
+<script src="api-client.js"></script>
+
 <!-- Global Command Palette Modal (⌘K) -->
 <div id="cmd-palette" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm hidden items-start justify-center pt-24 px-4">
   <div class="bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">

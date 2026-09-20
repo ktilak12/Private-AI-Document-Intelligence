@@ -5,7 +5,12 @@
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
-    "dev": "npx serve ."
+    "dev": "npx serve .",
+    "build:ui": "node build.js && node app-enhancer.js",
+    "start:backend": "cd backend && npx ts-node src/server.ts",
+    "test:integration": "cd backend && npx ts-node test/verify-integration.ts",
+    "test:rag": "cd backend && npx ts-node test/verify-rag.ts",
+    "test:security": "cd backend && npx ts-node test/verify-security.ts"
   },
   "keywords": ["ai", "document-intelligence", "rag", "stitch", "ui"],
   "author": "Tilak",
