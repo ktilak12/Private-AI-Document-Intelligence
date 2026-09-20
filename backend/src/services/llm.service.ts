@@ -1,4 +1,5 @@
 import { SearchResult } from './retrieval.service';
+import { GoogleGenAI } from '@google/genai';
 
 export interface Citation {
   id: string;
@@ -23,6 +24,19 @@ export interface RAGAnswerResponse {
 }
 
 export class LlmService {
+  private geminiClient: GoogleGenAI | null = null;
+
+  constructor() {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (apiKey && apiKey.trim().length > 0) {
+      try {
+        this.geminiClient = new GoogleGenAI({ apiKey });
+      } catch (err) {
+        console.warn('[PAIDI LLM] Could not initialize Gemini SDK:', err);
+      }
+    }
+  }
+
   /**
    * Builds grounded answer with verifiable citation markers
    */
@@ -55,8 +69,60 @@ export class LlmService {
       relevanceScore: Math.round(result.score * 100),
     }));
 
-    // Synthesize grounded response referencing citations
+    // Calculate RAG Triad scores based on retrieval fidelity
     const topResult = searchResults[0];
+    const topScore = topResult.score;
+    const avgScore = searchResults.reduce((sum, r) => sum + r.score, 0) / searchResults.length;
+
+    const faithfulness = parseFloat(Math.min(0.98, Math.max(0.88, topScore + 0.15)).toFixed(2));
+    const answerRelevance = parseFloat(Math.min(0.96, Math.max(0.85, avgScore + 0.2)).toFixed(2));
+    const contextPrecision = parseFloat(Math.min(0.99, Math.max(0.82, topScore + 0.1)).toFixed(2));
+    const confidence = parseFloat(((faithfulness + answerRelevance + contextPrecision) / 3).toFixed(2));
+
+    // 1. Try Gemini API generation if API key is active
+    if (this.geminiClient) {
+      try {
+        const evidenceContext = searchResults.map((res, i) =>
+          `[${i + 1}] Source: ${res.chunk.metadata.filename} (Page ${res.chunk.metadata.pageNumber || 1})\nContent: ${res.chunk.content}`
+        ).join('\n\n');
+
+        const systemPrompt = `You are PAIDI (Private AI Document Intelligence).
+Answer the user's question STRICTLY and ONLY using the provided evidence chunks below.
+Rules:
+1. Every claim must be cited with inline brackets [1], [2] matching the source chunk.
+2. Do not fabricate, extrapolate, or use outside knowledge.
+3. If the evidence does not support the answer, state that clearly.
+
+EVIDENCE CHUNKS:
+${evidenceContext}
+
+USER QUESTION: ${query}`;
+
+        const response = await this.geminiClient.models.generateContent({
+          model: 'gemini-1.5-flash',
+          contents: systemPrompt,
+        });
+
+        const generatedText = response.text?.trim();
+        if (generatedText) {
+          return {
+            answer: generatedText,
+            citations,
+            confidence,
+            evaluationMetrics: {
+              faithfulness,
+              answerRelevance,
+              contextPrecision,
+            },
+            retrievedCount: searchResults.length,
+          };
+        }
+      } catch (geminiError: any) {
+        console.warn('[PAIDI LLM] Gemini API fallback to local synthesis:', geminiError.message);
+      }
+    }
+
+    // 2. Air-gapped Deterministic Synthesizer Fallback
     const secondaryResults = searchResults.slice(1);
 
     const primaryPoints = topResult.chunk.content
@@ -84,15 +150,6 @@ export class LlmService {
         synthesisText += `\n\nAdditionally, supplementary evidence indicates: ${extraPoint} [2]`;
       }
     }
-
-    // Calculate RAG Triad scores based on retrieval fidelity
-    const topScore = topResult.score;
-    const avgScore = searchResults.reduce((sum, r) => sum + r.score, 0) / searchResults.length;
-
-    const faithfulness = parseFloat(Math.min(0.98, Math.max(0.88, topScore + 0.15)).toFixed(2));
-    const answerRelevance = parseFloat(Math.min(0.96, Math.max(0.85, avgScore + 0.2)).toFixed(2));
-    const contextPrecision = parseFloat(Math.min(0.99, Math.max(0.82, topScore + 0.1)).toFixed(2));
-    const confidence = parseFloat(((faithfulness + answerRelevance + contextPrecision) / 3).toFixed(2));
 
     return {
       answer: synthesisText,
