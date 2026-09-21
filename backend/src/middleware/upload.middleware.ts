@@ -24,6 +24,7 @@ const ALLOWED_MIME_TYPES = new Set([
 
 // Sanitize filename to prevent Path Traversal, Null Byte Injections, and dangerous characters
 export function sanitizeFilename(originalName: string): string {
+  if (!originalName || typeof originalName !== 'string') return 'unnamed-document.txt';
   const baseName = path.basename(originalName);
   // Remove null bytes, path traversal sequences, and special characters
   const cleanName = baseName.replace(/[\0\x00-\x1f\x7f\\/\?%*:|"<>]/g, '').replace(/\.\.+/g, '.');
