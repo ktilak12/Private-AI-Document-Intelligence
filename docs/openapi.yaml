@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: PAIDI - Private AI Document Intelligence Platform API
+  description: >-
+    Enterprise-grade air-gapped retrieval-augmented generation (RAG) platform with
+    verifiable citations, multi-format parsing, cryptographic audit ledger, and prompt injection defense.
+  version: 2.0.0
+  contact:
+    name: PAIDI Enterprise Security
+    url: https://github.com/ktilak12/Private-AI-Document-Intelligence
+servers:
+  - url: http://localhost:3000/api
+    description: Local Development & Enterprise Staging API Gateway
+
+paths:
+  /health:
+    get:
+      summary: Health check and security headers status
+      tags: [System]
+      responses:
+        '200':
+          description: Service is healthy and protected
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: "ok" }
+                  service: { type: string, example: "PAIDI AI Document Intelligence" }
+                  timestamp: { type: string, format: date-time }
+
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email, example: "analyst@paidi.enterprise" }
+                password: { type: string, minLength: 8, example: "Secur3P@ssw0rd!" }
+                role: { type: string, enum: [admin, auditor, user], default: user }
+      responses:
+        '201':
+          description: User registered successfully
+
+  /auth/login:
+    post:
+      summary: Authenticate and obtain JWT Bearer token
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  user:
+                    type: object
+                    properties:
+                      id: { type: string }
+                      email: { type: string }
+                      role: { type: string }
+
+  /documents/upload:
+    post:
+      summary: Upload and index a document (PDF, DOCX, XLSX, TXT, MD, JSON, CSV)
+      tags: [Documents]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Document parsed, chunked, indexed, and summarized
+
+  /documents:
+    get:
+      summary: List all indexed documents with token counts and executive summaries
+      tags: [Documents]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of documents
+
+  /chat/query:
+    post:
+      summary: Execute hybrid RAG query with exact source citations
+      tags: [RAG & Chat]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string, example: "What is the key rotation schedule?" }
+                documentIds: { type: array, items: { type: string } }
+                topK: { type: integer, default: 4 }
+                conversationId: { type: string }
+      responses:
+        '200':
+          description: Grounded answer with citations and RAG Triad scores
+
+  /chat/stream:
+    post:
+      summary: Real-Time Server-Sent Events (SSE) token streaming pipeline
+      tags: [RAG & Chat]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: SSE event stream (text/event-stream)
+
+  /chat/compare:
+    post:
+      summary: Comparative multi-document delta analysis
+      tags: [RAG & Chat]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [documentId1, documentId2]
+              properties:
+                documentId1: { type: string }
+                documentId2: { type: string }
+                topic: { type: string }
+      responses:
+        '200':
+          description: Structured comparative intelligence report
+
+  /audit/logs:
+    get:
+      summary: Retrieve immutable cryptographic audit records
+      tags: [Compliance & Audit]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Paginated audit log records
+
+  /audit/export:
+    get:
+      summary: Export audit trail in CSV or JSON format
+      tags: [Compliance & Audit]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum: [json, csv]
+            default: json
+      responses:
+        '200':
+          description: Downloadable audit file
+
+  /evaluation/metrics:
+    get:
+      summary: Aggregated RAG Triad benchmarks (Faithfulness, Relevance, Precision)
+      tags: [Compliance & Audit]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Aggregated telemetry metrics
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
