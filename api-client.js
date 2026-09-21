@@ -210,6 +210,65 @@ class PaidiApiClient {
   }
 
 
+  // ==================== AUDIT & EVALUATION METHODS ====================
+
+  async getAuditLogs(params = {}) {
+    const query = new URLSearchParams(params).toString();
+    const endpoint = query ? `/audit/logs?${query}` : '/audit/logs';
+    try {
+      const data = await this.request(endpoint, { method: 'GET' });
+      return data.logs || [];
+    } catch {
+      return [];
+    }
+  }
+
+  async exportAuditLogs(format = 'json') {
+    const token = this.getToken();
+    const res = await fetch(`${this.baseUrl}/audit/export?format=${format}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+    if (!res.ok) throw new Error('Failed to export audit logs');
+    if (format === 'csv') {
+      return await res.text();
+    }
+    return await res.json();
+  }
+
+  async getEvaluationMetrics() {
+    try {
+      const data = await this.request('/evaluation/metrics', { method: 'GET' });
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  // ==================== CONVERSATION METHODS ====================
+
+  async createConversation(title) {
+    return await this.request('/chat/conversations', {
+      method: 'POST',
+      body: JSON.stringify({ title })
+    });
+  }
+
+  async getConversations() {
+    try {
+      const data = await this.request('/chat/conversations', { method: 'GET' });
+      return data.conversations || [];
+    } catch {
+      return [];
+    }
+  }
+
+  async getConversation(id) {
+    return await this.request(`/chat/conversations/${id}`, { method: 'GET' });
+  }
+
   // ==================== AUTH METHODS ====================
 
   async login(email, password) {

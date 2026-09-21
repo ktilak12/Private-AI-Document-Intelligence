@@ -10,6 +10,28 @@
   // Global Citations Cache for Grounding Inspector
   window.currentCitations = [];
 
+  // HTML Entity Sanitizer for Strict XSS Prevention
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  window.escapeHtml = escapeHtml;
+
+  // Safe clipboard helper
+  window.copyToClipboard = function (text) {
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Copied to clipboard', 'success');
+    }).catch(() => {
+      showToast('Failed to copy', 'error');
+    });
+  };
+
   // ==========================================================================
   // 1. PAGE ROUTER & INITIALIZATION
   // ==========================================================================
@@ -193,18 +215,22 @@
           tableBody.innerHTML = docs
             .slice(0, 6)
             .map(
-              (doc) => `
+              (doc) => {
+                const safeName = escapeHtml(doc.filename);
+                const safeId = escapeHtml(doc.id);
+                const safeType = escapeHtml(doc.fileType || 'TXT');
+                return `
             <tr class="hover:bg-surface-container/50 border-b border-outline-variant/20 transition-colors">
               <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
                   <span class="material-symbols-outlined text-primary text-[20px]">description</span>
                   <div class="flex flex-col min-w-0">
-                    <span class="font-body-md text-on-surface font-medium truncate max-w-[260px]">${doc.filename}</span>
-                    <span class="font-label-sm text-outline">ID: ${doc.id}</span>
+                    <span class="font-body-md text-on-surface font-medium truncate max-w-[260px]">${safeName}</span>
+                    <span class="font-label-sm text-outline">ID: ${safeId}</span>
                   </div>
                 </div>
               </td>
-              <td class="px-4 py-3 font-code-citation text-code-citation text-on-surface-variant">${doc.fileType || 'TXT'}</td>
+              <td class="px-4 py-3 font-code-citation text-code-citation text-on-surface-variant">${safeType}</td>
               <td class="px-4 py-3">
                 <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary/15 text-tertiary border border-tertiary/30">
                   <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
@@ -213,12 +239,13 @@
               </td>
               <td class="px-4 py-3 font-code-citation text-code-citation text-primary">${doc.totalChunks || 1} CHUNKS</td>
               <td class="px-4 py-3 text-right">
-                <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Summarize ' + '${doc.filename}')" class="px-2.5 py-1 rounded bg-primary-container text-on-primary-container text-label-sm font-label-sm hover:brightness-110">
+                <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Summarize ' + ${JSON.stringify(doc.filename)})" class="px-2.5 py-1 rounded bg-primary-container text-on-primary-container text-label-sm font-label-sm hover:brightness-110">
                   Ask AI
                 </button>
               </td>
             </tr>
-          `
+          `;
+              }
             )
             .join('');
         }
@@ -267,10 +294,10 @@
                 </div>
                 <div class="flex flex-col min-w-0 flex-1">
                   <div class="flex items-center justify-between">
-                    <span class="font-label-sm text-label-sm ${ev.color} font-semibold">${ev.title}</span>
-                    <span class="font-code-citation text-code-citation text-outline">${ev.time}</span>
+                    <span class="font-label-sm text-label-sm ${ev.color} font-semibold">${escapeHtml(ev.title)}</span>
+                    <span class="font-code-citation text-code-citation text-outline">${escapeHtml(ev.time)}</span>
                   </div>
-                  <p class="font-body-sm text-body-sm text-on-surface font-medium truncate">${ev.sub}</p>
+                  <p class="font-body-sm text-body-sm text-on-surface font-medium truncate">${escapeHtml(ev.sub)}</p>
                 </div>
               </div>
             `).join('')}
@@ -459,9 +486,12 @@
           const ext = (doc.fileType || 'TXT').toUpperCase();
           const iconName = ext === 'PDF' ? 'picture_as_pdf' : ext === 'DOCX' ? 'article' : 'description';
           const iconColor = ext === 'PDF' ? 'text-error' : ext === 'DOCX' ? 'text-secondary' : 'text-primary';
+          const safeName = escapeHtml(doc.filename);
+          const safeId = escapeHtml(doc.id);
+          const safeExt = escapeHtml(ext);
 
           return `
-          <div data-ext="${ext}" class="group relative rounded-xl bg-surface-container p-4 flex flex-col justify-between gap-4 transition-all duration-150 hover:bg-surface-container-high shadow-sm border border-outline-variant/20 hover:border-primary/40 animate-in fade-in">
+          <div data-ext="${safeExt}" class="group relative rounded-xl bg-surface-container p-4 flex flex-col justify-between gap-4 transition-all duration-150 hover:bg-surface-container-high shadow-sm border border-outline-variant/20 hover:border-primary/40 animate-in fade-in">
             <div class="flex flex-col gap-3">
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
@@ -469,15 +499,15 @@
                     <span class="material-symbols-outlined text-[22px]">${iconName}</span>
                   </div>
                   <div class="flex flex-col min-w-0">
-                    <span class="font-body-md text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors" title="${doc.filename}">${doc.filename}</span>
+                    <span class="font-body-md text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors" title="${safeName}">${safeName}</span>
                     <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mt-0.5">
-                      <span>${ext}</span>
+                      <span>${safeExt}</span>
                       <span>·</span>
                       <span>${doc.totalChunks || 1} chunks</span>
                     </div>
                   </div>
                 </div>
-                <button onclick="handleDeleteDocument('${doc.id}')" class="text-outline hover:text-error p-1.5 rounded hover:bg-surface-container-highest transition-colors" title="Delete from vault">
+                <button onclick="handleDeleteDocument(${JSON.stringify(doc.id)})" class="text-outline hover:text-error p-1.5 rounded hover:bg-surface-container-highest transition-colors" title="Delete from vault">
                   <span class="material-symbols-outlined text-[18px]">delete</span>
                 </button>
               </div>
@@ -496,7 +526,7 @@
                   <div class="h-1.5 w-1/2 bg-surface-container rounded-sm"></div>
                 </div>
                 <div class="flex items-center justify-between text-outline font-code-citation text-code-citation">
-                  <span>ID: ${doc.id.slice(0, 14)}...</span>
+                  <span>ID: ${safeId.slice(0, 14)}...</span>
                   <span>AES-256-GCM</span>
                 </div>
               </div>
@@ -509,11 +539,11 @@
             </div>
 
             <div class="flex items-center justify-between pt-2 border-t border-outline-variant/15">
-              <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Provide a complete summary of ' + '${doc.filename}')" class="h-8 px-3 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 font-label-md text-label-md flex items-center gap-1.5 transition-all">
+              <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Provide a complete summary of ' + ${JSON.stringify(doc.filename)})" class="h-8 px-3 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 font-label-md text-label-md flex items-center gap-1.5 transition-all">
                 <span class="material-symbols-outlined text-[15px]">smart_toy</span>
                 <span>Ask AI</span>
               </button>
-              <button onclick="showToast('Document ID: ${doc.id} - Verified in enclave memory', 'info')" class="h-8 px-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
+              <button onclick="showToast('Document ID: ' + ${JSON.stringify(doc.id)} + ' - Verified in enclave memory', 'info')" class="h-8 px-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
                 <span class="material-symbols-outlined text-[15px]">verified</span>
                 <span>Inspect</span>
               </button>
@@ -753,7 +783,7 @@
 
     const textEl = document.getElementById('inspect-text');
     if (textEl) {
-      textEl.innerHTML = `<span class="bg-primary/20 text-primary-fixed border-b border-primary/50 font-medium px-1 leading-relaxed block">${cite.snippet}</span>`;
+      textEl.innerHTML = `<span class="bg-primary/20 text-primary-fixed border-b border-primary/50 font-medium px-1 leading-relaxed block">${escapeHtml(cite.snippet)}</span>`;
     }
 
     const chunkEl = document.getElementById('inspect-chunk');
@@ -816,7 +846,7 @@
       <div class="flex items-start gap-3.5 self-end max-w-2xl animate-in fade-in duration-200">
         <div class="flex flex-col items-end gap-1">
           <div class="px-4 py-3 rounded-2xl rounded-tr-none bg-primary-container text-on-primary-container font-body-md shadow-sm">
-            ${item.query}
+            ${escapeHtml(item.query)}
           </div>
           <span class="font-label-sm text-label-sm text-outline px-1">${new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
         </div>
@@ -824,11 +854,12 @@
       </div>
     `;
 
-    let formattedAnswer = (item.answer || '').replace(/\n\n/g, '<br><br>');
+    let formattedAnswer = escapeHtml(item.answer || '').replace(/\n\n/g, '<br><br>');
     if (item.citations && item.citations.length > 0) {
       item.citations.forEach((cite, idx) => {
-        const regex = new RegExp('\\\\[' + (idx + 1) + '\\\\]', 'g');
-        const citeBadge = `<button onclick="window.inspectSource('${cite.id}')" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary/20 text-primary border border-primary/40 hover:bg-primary/30 transition-colors mx-1 cursor-pointer font-bold" title="Click to view verified source snippet"><span class="material-symbols-outlined text-[12px]">link</span>[${idx + 1}] ${cite.filename.slice(0, 16)}...</button>`;
+        const regex = new RegExp('\\[\\[' + (idx + 1) + '\\]\\]|\\[\\s*' + (idx + 1) + '\\s*\\]', 'g');
+        const safeDocName = escapeHtml(cite.filename ? cite.filename.slice(0, 16) : 'Source');
+        const citeBadge = `<button onclick="window.inspectSource(${JSON.stringify(cite.id)})" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary/20 text-primary border border-primary/40 hover:bg-primary/30 transition-colors mx-1 cursor-pointer font-bold" title="Click to view verified source snippet"><span class="material-symbols-outlined text-[12px]">link</span>[${idx + 1}] ${safeDocName}...</button>`;
         formattedAnswer = formattedAnswer.replace(regex, citeBadge);
       });
     }
@@ -846,7 +877,7 @@
             ${formattedAnswer}
           </div>
           <div class="flex items-center gap-2 px-1 flex-wrap">
-            <button onclick="navigator.clipboard.writeText('${(item.answer || '').replace(/'/g, "\\'")}'); showToast('Copied to clipboard', 'success');" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+            <button onclick="window.copyToClipboard(${JSON.stringify(item.answer || '')})" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
               <span class="material-symbols-outlined text-[14px]">content_copy</span>
               <span>Copy</span>
             </button>
@@ -887,7 +918,7 @@
       <div class="flex items-start gap-3.5 self-end max-w-2xl animate-in fade-in slide-in-from-bottom-2 duration-200">
         <div class="flex flex-col items-end gap-1">
           <div class="px-4 py-3 rounded-2xl rounded-tr-none bg-primary-container text-on-primary-container font-body-md shadow-sm">
-            ${queryText}
+            ${escapeHtml(queryText)}
           </div>
           <span class="font-label-sm text-label-sm text-outline px-1">Just now</span>
         </div>
@@ -919,11 +950,12 @@
 
       window.currentCitations = res.citations || [];
 
-      let formattedAnswer = (res.answer || '').replace(/\n\n/g, '<br><br>');
+      let formattedAnswer = escapeHtml(res.answer || '').replace(/\n\n/g, '<br><br>');
       if (res.citations && res.citations.length > 0) {
         res.citations.forEach((cite, idx) => {
-          const regex = new RegExp('\\\\[' + (idx + 1) + '\\\\]', 'g');
-          const citeBadge = `<button onclick="window.inspectSource('${cite.id}')" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary/20 text-primary border border-primary/40 hover:bg-primary/30 transition-colors mx-1 cursor-pointer font-bold" title="Click to view verified source snippet"><span class="material-symbols-outlined text-[12px]">link</span>[${idx + 1}] ${cite.filename.slice(0, 16)}...</button>`;
+          const regex = new RegExp('\\[\\[' + (idx + 1) + '\\]\\]|\\[\\s*' + (idx + 1) + '\\s*\\]', 'g');
+          const safeDocName = escapeHtml(cite.filename ? cite.filename.slice(0, 16) : 'Source');
+          const citeBadge = `<button onclick="window.inspectSource(${JSON.stringify(cite.id)})" class="inline-flex items-center gap-1 font-code-citation text-code-citation px-2 py-0.5 rounded bg-primary/20 text-primary border border-primary/40 hover:bg-primary/30 transition-colors mx-1 cursor-pointer font-bold" title="Click to view verified source snippet"><span class="material-symbols-outlined text-[12px]">link</span>[${idx + 1}] ${safeDocName}...</button>`;
           formattedAnswer = formattedAnswer.replace(regex, citeBadge);
         });
       }
@@ -941,7 +973,7 @@
               ${formattedAnswer}
             </div>
             <div class="flex items-center gap-2 px-1 flex-wrap">
-              <button onclick="navigator.clipboard.writeText('${(res.answer || '').replace(/'/g, "\\'")}'); showToast('Copied to clipboard', 'success');" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+              <button onclick="window.copyToClipboard(${JSON.stringify(res.answer || '')})" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
                 <span class="material-symbols-outlined text-[14px]">content_copy</span>
                 <span>Copy</span>
               </button>
@@ -1007,10 +1039,10 @@
           (h) => `
         <div onclick='window.loadSession(${JSON.stringify(h).replace(/'/g, "&apos;")})' class="p-2.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer flex flex-col gap-1 transition-all border border-transparent hover:border-outline-variant/30">
           <div class="flex items-center justify-between">
-            <span class="font-headline-sm text-headline-sm truncate text-on-surface leading-tight">${h.query.slice(0, 22)}...</span>
+            <span class="font-headline-sm text-headline-sm truncate text-on-surface leading-tight">${escapeHtml(h.query.slice(0, 22))}...</span>
             <span class="font-label-sm text-label-sm text-outline">${new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
-          <p class="font-body-sm text-body-sm text-outline truncate">${(h.answer || '').slice(0, 32)}...</p>
+          <p class="font-body-sm text-body-sm text-outline truncate">${escapeHtml((h.answer || '').slice(0, 32))}...</p>
           <div class="flex items-center gap-2 mt-1">
             <span class="font-code-citation text-code-citation px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">${h.citations?.length || 0} SOURCES</span>
             <span class="font-code-citation text-code-citation text-outline">${Math.round((h.confidence || 0.94) * 100)}% CONF</span>
@@ -1094,16 +1126,19 @@
             const faith = Math.round(((item.evaluationMetrics?.faithfulness) || 0.95) * 100);
             const docName = item.citations?.[0]?.filename || 'Corpus Vector';
             const latency = item.latencyMs ? `${item.latencyMs}ms` : `${280 + (idx * 25) % 150}ms`;
+            const safeQuery = escapeHtml(item.query);
+            const safeDocName = escapeHtml(docName);
+
             return `
               <tr class="hover:bg-surface-container/60 transition-colors border-b border-outline-variant/10">
                 <td class="py-3 px-4">
                   <div class="flex flex-col">
                     <span class="font-medium text-on-surface flex items-center gap-1.5 truncate max-w-[240px]">
-                      ${item.query}
+                      ${safeQuery}
                     </span>
                     <span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
                       <span class="material-symbols-outlined text-[14px]">description</span>
-                      ${docName}
+                      ${safeDocName}
                     </span>
                   </div>
                 </td>
@@ -1155,12 +1190,18 @@
     const docName = cite?.filename || 'Corpus Source';
     const chunkId = cite?.chunkId ? cite.chunkId.slice(-8) : 'chk_live';
     const snippet = cite?.snippet || item.answer;
+    const safeQuery = escapeHtml(item.query);
+    const safeDocName = escapeHtml(docName);
+    const safeSnippet = escapeHtml(snippet);
+    const safeAnswer = escapeHtml(item.answer || '');
+    const safeChunkId = escapeHtml(chunkId);
+    const safeEvalId = escapeHtml(item.id ? item.id.slice(-4) : 'LIVE');
 
     container.innerHTML = `
       <div class="flex items-start justify-between border-b border-outline-variant/30 pb-3">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-code-citation text-code-citation font-bold tracking-wider">#EVAL-${item.id ? item.id.slice(-4) : 'LIVE'}</span>
+            <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-code-citation text-code-citation font-bold tracking-wider">#EVAL-${safeEvalId}</span>
             <span class="font-headline-sm text-headline-sm text-on-surface font-medium">Telemetry Details</span>
           </div>
           <p class="font-code-citation text-code-citation text-outline truncate max-w-[280px]">
@@ -1179,7 +1220,7 @@
           Query Under Test
         </span>
         <p class="font-body-sm text-body-sm text-on-surface italic">
-          "${item.query}"
+          "${safeQuery}"
         </p>
       </div>
 
@@ -1191,19 +1232,19 @@
         <div class="bg-surface-container-lowest p-3 rounded-lg border-l-2 border-outline space-y-1">
           <div class="flex items-center justify-between text-outline">
             <span class="font-label-sm text-label-sm font-semibold">GROUNDED CORPUS SOURCE</span>
-            <span class="font-code-citation text-code-citation">${docName}</span>
+            <span class="font-code-citation text-code-citation">${safeDocName}</span>
           </div>
           <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
-            "${snippet}"
+            "${safeSnippet}"
           </p>
         </div>
         <div class="bg-surface-container-lowest p-3 rounded-lg border-l-2 border-primary space-y-1">
           <div class="flex items-center justify-between text-primary">
             <span class="font-label-sm text-label-sm font-semibold">MODEL RETRIEVED SYNTHESIS</span>
-            <span class="font-code-citation text-code-citation text-primary">Chunk #${chunkId}</span>
+            <span class="font-code-citation text-code-citation text-primary">Chunk #${safeChunkId}</span>
           </div>
           <p class="font-body-sm text-body-sm text-on-surface line-clamp-3">
-            ${item.answer}
+            ${safeAnswer}
           </p>
         </div>
       </div>
@@ -1226,20 +1267,6 @@
       <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20 space-y-1.5">
         <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Automated Guardrail Verification</span>
         <div class="flex flex-col gap-1.5 font-label-sm text-label-sm">
-          <div class="flex items-center justify-between text-on-surface">
-            <span class="flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-tertiary text-[16px]">verified_user</span>
-              Zero Data Leakage Sandbox
-            </span>
-            <span class="font-code-citation text-code-citation text-tertiary">SECURE</span>
-          </div>
-          <div class="flex items-center justify-between text-on-surface">
-            <span class="flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-tertiary text-[16px]">anchor</span>
-              Citation Coordinate Bounds
-            </span>
-            <span class="font-code-citation text-code-citation text-on-surface-variant">${docName}</span>
-          </div>
           <div class="flex items-center justify-between text-on-surface">
             <span class="flex items-center gap-1.5">
               <span class="material-symbols-outlined text-tertiary text-[16px]">security</span>
@@ -1392,8 +1419,12 @@
         pinnedGrid.innerHTML = history
           .slice(0, 3)
           .map(
-            (h) => `
-          <div onclick="window.location.href='assistant.html?q=' + encodeURIComponent('${h.query.replace(/'/g, "\\'")}')" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col justify-between group cursor-pointer border border-outline-variant/20 hover:border-primary/40 shadow-sm animate-in fade-in">
+            (h) => {
+              const safeQuery = escapeHtml(h.query);
+              const safeAnswer = escapeHtml(h.answer || 'Grounded neural response synthesized.');
+              const safeDocName = escapeHtml(h.citations?.[0]?.filename || 'Corpus Source');
+              return `
+          <div onclick="window.location.href='assistant.html?q=' + encodeURIComponent(${JSON.stringify(h.query)})" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col justify-between group cursor-pointer border border-outline-variant/20 hover:border-primary/40 shadow-sm animate-in fade-in">
             <div class="flex flex-col gap-2.5">
               <div class="flex items-center justify-between">
                 <span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-code-citation text-code-citation font-semibold flex items-center gap-1.5">
@@ -1402,16 +1433,16 @@
                 <span class="font-code-citation text-code-citation text-on-surface-variant">${new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
               <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
-                ${h.query}
+                ${safeQuery}
               </h3>
               <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-                ${h.answer || 'Grounded neural response synthesized.'}
+                ${safeAnswer}
               </p>
             </div>
             <div class="mt-4 pt-3 border-t border-outline-variant/20 flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
-                <span class="font-code-citation text-code-citation text-on-surface truncate max-w-[140px]">${h.citations?.[0]?.filename || 'Corpus Source'}</span>
+                <span class="font-code-citation text-code-citation text-on-surface truncate max-w-[140px]">${safeDocName}</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="font-code-citation text-code-citation text-secondary">${h.citations?.length || 0} sources</span>
@@ -1419,7 +1450,8 @@
               </div>
             </div>
           </div>
-        `
+        `;
+            }
           )
           .join('');
       }
@@ -1428,7 +1460,12 @@
       if (timelineContainer) {
         timelineContainer.innerHTML = history
           .map(
-            (h, idx) => `
+            (h, idx) => {
+              const safeQuery = escapeHtml(h.query);
+              const safeAnswerSnippet = escapeHtml((h.answer || '').slice(0, 240)) + ((h.answer || '').length > 240 ? '...' : '');
+              const safeSessionId = escapeHtml(h.id ? h.id.slice(-6) : String(1000 + idx));
+
+              return `
           <article class="p-5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col gap-4 shadow-sm group border border-outline-variant/20 hover:border-primary/40 animate-in fade-in">
             <div class="flex items-start justify-between gap-4">
               <div class="flex items-start gap-3 min-w-0">
@@ -1437,10 +1474,10 @@
                 </div>
                 <div class="flex flex-col min-w-0">
                   <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold leading-snug">
-                    ${h.query}
+                    ${safeQuery}
                   </h3>
                   <span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">
-                    ${new Date(h.timestamp).toLocaleString()} · Enclave Session #${h.id ? h.id.slice(-6) : 1000 + idx}
+                    ${new Date(h.timestamp).toLocaleString()} · Enclave Session #${safeSessionId}
                   </span>
                 </div>
               </div>
@@ -1454,7 +1491,7 @@
                 <span class="material-symbols-outlined text-tertiary text-[16px]">verified</span>
                 <span class="font-label-sm text-label-sm text-tertiary font-medium">Verified Grounded Response</span>
               </div>
-              <p class="text-on-surface leading-relaxed">${(h.answer || '').slice(0, 240)}${(h.answer || '').length > 240 ? '...' : ''}</p>
+              <p class="text-on-surface leading-relaxed">${safeAnswerSnippet}</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
@@ -1464,7 +1501,7 @@
                   (c) => `
                 <div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-citation text-code-citation">
                   <span class="material-symbols-outlined text-[14px]">file_copy</span>
-                  <span>${c.filename}</span>
+                  <span>${escapeHtml(c.filename)}</span>
                 </div>
               `
                 )
@@ -1473,11 +1510,11 @@
 
             <div class="flex items-center justify-between pt-3 border-t border-surface-container-high/60">
               <div class="flex items-center gap-2">
-                <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent('${h.query.replace(/'/g, "\\'")}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm">
+                <button onclick="window.location.href='assistant.html?q=' + encodeURIComponent(${JSON.stringify(h.query)})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-medium hover:brightness-110 transition-all shadow-sm">
                   <span class="material-symbols-outlined text-[16px]">restart_alt</span>
                   <span>Resume Session</span>
                 </button>
-                <button onclick="navigator.clipboard.writeText('${(h.answer || '').replace(/'/g, "\\'")}'); showToast('Copied to clipboard', 'success')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+                <button onclick="window.copyToClipboard(${JSON.stringify(h.answer || '')})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
                   <span class="material-symbols-outlined text-[16px]">content_copy</span>
                   <span>Copy</span>
                 </button>
@@ -1485,7 +1522,8 @@
               <span class="font-label-sm text-label-sm text-outline">${new Date(h.timestamp).toLocaleDateString()}</span>
             </div>
           </article>
-        `
+        `;
+            }
           )
           .join('');
       }
@@ -1509,12 +1547,13 @@
             const count = counts[d.filename] || 0;
             const ext = (d.fileType || 'TXT').toUpperCase();
             const icon = ext === 'PDF' ? 'picture_as_pdf' : ext === 'DOCX' ? 'article' : 'description';
+            const safeDocName = escapeHtml(d.filename);
             return `
-              <div onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Analyze ' + '${d.filename}')" class="p-3 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between cursor-pointer border border-transparent hover:border-outline-variant/30">
+              <div onclick="window.location.href='assistant.html?q=' + encodeURIComponent('Analyze ' + ${JSON.stringify(d.filename)})" class="p-3 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between cursor-pointer border border-transparent hover:border-outline-variant/30">
                 <div class="flex items-center gap-2.5 min-w-0">
                   <span class="material-symbols-outlined text-[18px] text-primary shrink-0">${icon}</span>
                   <div class="flex flex-col min-w-0">
-                    <span class="font-body-sm text-body-sm font-medium text-on-surface truncate">${d.filename}</span>
+                    <span class="font-body-sm text-body-sm font-medium text-on-surface truncate">${safeDocName}</span>
                     <span class="font-label-sm text-label-sm text-on-surface-variant">${d.totalChunks || 1} chunks · Verified</span>
                   </div>
                 </div>
