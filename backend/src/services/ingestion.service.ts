@@ -2,6 +2,9 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
+import mammoth from 'mammoth';
+const pdfParse = require('pdf-parse');
+
 export interface DocumentChunkData {
   id: string;
   documentId: string;
@@ -39,14 +42,35 @@ export class IngestionService {
   }
 
   /**
-   * Parses raw file buffer into clean text
+   * Parses raw file buffer into clean text using specialized document parsers
    */
   public async parseFile(filePath: string, originalFilename: string): Promise<string> {
     const ext = path.extname(originalFilename).toLowerCase();
     const buffer = fs.readFileSync(filePath);
 
-    if (ext === '.txt' || ext === '.md' || ext === '.json' || ext === '.csv') {
-      return buffer.toString('utf-8');
+    try {
+      // 1. PDF Document Parsing
+      if (ext === '.pdf') {
+        const parsed = await pdfParse(buffer);
+        if (parsed.text && parsed.text.trim().length > 0) {
+          return parsed.text;
+        }
+      }
+
+      // 2. Microsoft Word (.docx) Parsing
+      if (ext === '.docx') {
+        const result = await mammoth.extractRawText({ buffer });
+        if (result.value && result.value.trim().length > 0) {
+          return result.value;
+        }
+      }
+
+      // 3. Plain Text, Markdown, JSON, CSV
+      if (ext === '.txt' || ext === '.md' || ext === '.json' || ext === '.csv') {
+        return buffer.toString('utf-8');
+      }
+    } catch (parseError: any) {
+      console.warn(`[INGESTION WARNING] Specialized parser failed for ${originalFilename}:`, parseError.message);
     }
 
     // Fallback for general text or basic string extraction

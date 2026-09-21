@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { upload } from '../middleware/upload.middleware';
 import { ingestionService } from '../services/ingestion.service';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
+import { recordAuditLog } from './audit.routes';
 
 const router = Router();
 
@@ -18,6 +19,16 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: Authentic
     const ingested = await ingestionService.processDocument(
       req.file.path,
       req.file.originalname
+    );
+
+    recordAuditLog(
+      req.user?.id || 'usr_anonymous',
+      req.user?.email || 'anonymous@paidi.local',
+      'DOCUMENT_UPLOAD',
+      `Uploaded and indexed "${ingested.filename}" (${ingested.totalChunks} chunks)`,
+      req.ip || '127.0.0.1',
+      'SUCCESS',
+      ingested.id
     );
 
     res.status(201).json({
@@ -75,11 +86,23 @@ router.get('/:id', requireAuth, (req: AuthenticatedRequest, res: Response): void
  */
 router.delete('/:id', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
   const docId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const doc = ingestionService.getDocumentById(docId);
   const deleted = ingestionService.deleteDocument(docId);
   if (!deleted) {
     res.status(404).json({ error: 'Document not found' });
     return;
   }
+
+  recordAuditLog(
+    req.user?.id || 'usr_anonymous',
+    req.user?.email || 'anonymous@paidi.local',
+    'DOCUMENT_DELETE',
+    `Deleted document "${doc?.filename || docId}"`,
+    req.ip || '127.0.0.1',
+    'SUCCESS',
+    docId
+  );
+
   res.status(200).json({ message: 'Document deleted successfully' });
 });
 
