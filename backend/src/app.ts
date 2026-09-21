@@ -67,6 +67,8 @@ app.use('/api/auth/', authLimiter);
 import authRoutes from './routes/auth.routes';
 import documentsRoutes from './routes/documents.routes';
 import chatRoutes from './routes/chat.routes';
+import auditRoutes from './routes/audit.routes';
+import evaluationRoutes from './routes/evaluation.routes';
 
 // Basic health check endpoint
 app.get('/health', (req: Request, res: Response) => {
@@ -86,6 +88,8 @@ app.get('/health', (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/audit', auditRoutes);
+app.use('/api/evaluation', evaluationRoutes);
 
 // 4. Centralized Error Handler (Prevent Stack Trace Leakage)
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
