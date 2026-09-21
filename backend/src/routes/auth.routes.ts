@@ -2,9 +2,10 @@ import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
+import { JWT_SECRET } from '../config/security.config';
+import { recordAuditLog } from './audit.routes';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'paidi-enterprise-fallback-secret-key-32-chars-min';
 
 // In-memory secure user store (until PostgreSQL sync)
 interface StoredUser {
@@ -85,6 +86,16 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
       { expiresIn: '8h' }
     );
 
+    recordAuditLog(
+      newUser.id,
+      newUser.email,
+      'AUTH_REGISTER',
+      `User account created with role [${newUser.role}]`,
+      req.ip || '127.0.0.1',
+      'SUCCESS',
+      newUser.id
+    );
+
     res.status(201).json({
       message: 'Registration successful',
       user: { id: newUser.id, email: newUser.email, role: newUser.role },
@@ -127,6 +138,16 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       { id: user.id, email: user.email, role: user.role },
       JWT_SECRET,
       { expiresIn: '8h' }
+    );
+
+    recordAuditLog(
+      user.id,
+      user.email,
+      'AUTH_LOGIN',
+      `User logged in successfully (Role: ${user.role})`,
+      req.ip || '127.0.0.1',
+      'SUCCESS',
+      user.id
     );
 
     res.status(200).json({

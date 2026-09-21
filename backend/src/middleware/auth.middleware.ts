@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'paidi-enterprise-fallback-secret-key-32-chars-min';
+import { JWT_SECRET } from '../config/security.config';
 
 export interface AuthenticatedUser {
   id: string;
