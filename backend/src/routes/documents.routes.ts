@@ -40,6 +40,7 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: Authentic
         totalChunks: ingested.totalChunks,
         totalTokensApprox: ingested.totalTokensApprox,
         status: ingested.status,
+        summary: ingested.summary,
         createdAt: ingested.createdAt,
       }
     });
@@ -59,6 +60,7 @@ router.get('/', requireAuth, (req: AuthenticatedRequest, res: Response) => {
     totalChunks: doc.totalChunks,
     totalTokensApprox: doc.totalTokensApprox,
     status: doc.status,
+    summary: doc.summary,
     createdAt: doc.createdAt,
   }));
 

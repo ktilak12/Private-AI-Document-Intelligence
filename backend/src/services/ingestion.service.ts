@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-
 import mammoth from 'mammoth';
+import * as XLSX from 'xlsx';
+
 const pdfParse = require('pdf-parse');
 
 export interface DocumentChunkData {
@@ -19,6 +20,16 @@ export interface DocumentChunkData {
   };
 }
 
+export interface DocumentExecutiveSummary {
+  bullets: string[];
+  keyEntities: {
+    monetary: string[];
+    dates: string[];
+    percentages: string[];
+  };
+  estimatedReadingMinutes: number;
+}
+
 export interface IngestedDocument {
   id: string;
   filename: string;
@@ -27,6 +38,7 @@ export interface IngestedDocument {
   totalChunks: number;
   totalTokensApprox: number;
   status: 'processing' | 'ready' | 'failed';
+  summary?: DocumentExecutiveSummary;
   chunks: DocumentChunkData[];
   createdAt: string;
 }
@@ -39,6 +51,56 @@ export class IngestionService {
    */
   public computeFileHash(buffer: Buffer): string {
     return crypto.createHash('sha256').update(buffer).digest('hex');
+  }
+
+  /**
+   * Generates automated executive summary and entity highlights from document text
+   */
+  public generateExecutiveSummary(text: string): DocumentExecutiveSummary {
+    if (!text || text.trim().length === 0) {
+      return {
+        bullets: ['Empty document with no extractable text content.'],
+        keyEntities: { monetary: [], dates: [], percentages: [] },
+        estimatedReadingMinutes: 0,
+      };
+    }
+
+    // 1. Extract Key Sentences / Bullets
+    const sentences = text
+      .split(/(?<=[.?!])\s+/)
+      .map(s => s.trim())
+      .filter(s => s.length > 25 && !s.startsWith('#'));
+
+    const bullets: string[] = [];
+    if (sentences.length > 0) bullets.push(sentences[0]);
+    if (sentences.length > 3) bullets.push(sentences[Math.floor(sentences.length / 2)]);
+    if (sentences.length > 6) bullets.push(sentences[sentences.length - 1]);
+    if (bullets.length === 0) {
+      bullets.push(text.substring(0, 150) + '...');
+    }
+
+    // 2. Extract Entities via Regex
+    const monetaryMatches = text.match(/\$[\d,]+(?:\.\d+)?(?:\s*(?:Million|Billion|USD|EUR|k|M|B))?/gi) || [];
+    const dateMatches = text.match(/\b(?:\d{1,2}\/\d{1,2}\/\d{2,4}|(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}|Q[1-4]\s+\d{4})\b/gi) || [];
+    const percentMatches = text.match(/\b\d+(?:\.\d+)?%/g) || [];
+
+    const uniqueMonetary = Array.from(new Set(monetaryMatches)).slice(0, 5);
+    const uniqueDates = Array.from(new Set(dateMatches)).slice(0, 5);
+    const uniquePercents = Array.from(new Set(percentMatches)).slice(0, 5);
+
+    // 3. Estimated Reading Time (approx. 200 words per minute)
+    const wordCount = text.split(/\s+/).filter(Boolean).length;
+    const estimatedReadingMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+    return {
+      bullets: bullets.slice(0, 3),
+      keyEntities: {
+        monetary: uniqueMonetary,
+        dates: uniqueDates,
+        percentages: uniquePercents,
+      },
+      estimatedReadingMinutes,
+    };
   }
 
   /**
@@ -65,7 +127,25 @@ export class IngestionService {
         }
       }
 
-      // 3. Plain Text, Markdown, JSON, CSV
+      // 3. Excel Spreadsheet (.xlsx, .xls) Parsing
+      if (ext === '.xlsx' || ext === '.xls') {
+        const workbook = XLSX.read(buffer, { type: 'buffer' });
+        const sheetTexts: string[] = [];
+
+        workbook.SheetNames.forEach(sheetName => {
+          const sheet = workbook.Sheets[sheetName];
+          const csvText = XLSX.utils.sheet_to_csv(sheet);
+          if (csvText && csvText.trim().length > 0) {
+            sheetTexts.push(`### Sheet: ${sheetName}\n${csvText}`);
+          }
+        });
+
+        if (sheetTexts.length > 0) {
+          return sheetTexts.join('\n\n');
+        }
+      }
+
+      // 4. Plain Text, Markdown, JSON, CSV
       if (ext === '.txt' || ext === '.md' || ext === '.json' || ext === '.csv') {
         return buffer.toString('utf-8');
       }
@@ -96,7 +176,7 @@ export class IngestionService {
     while (start < text.length) {
       let end = start + chunkSize;
 
-      // If we aren't at the end of the text, try to find a natural break (paragraph, sentence, or word)
+      // If we aren't at the end of the text, try to find a natural break
       if (end < text.length) {
         const nextBreak = text.substring(start, end + 50);
         const newlineIdx = nextBreak.lastIndexOf('\n\n');
@@ -140,7 +220,7 @@ export class IngestionService {
   }
 
   /**
-   * Full ingestion pipeline: Reads -> Hashes -> Parses -> Chunks -> Indexes
+   * Full ingestion pipeline: Reads -> Hashes -> Parses -> Chunks -> Indexes -> Summarizes
    */
   public async processDocument(
     filePath: string,
@@ -160,6 +240,7 @@ export class IngestionService {
 
     const rawText = await this.parseFile(filePath, originalFilename);
     const chunks = this.chunkText(rawText, docId, originalFilename);
+    const summary = this.generateExecutiveSummary(rawText);
 
     const ingested: IngestedDocument = {
       id: docId,
@@ -169,6 +250,7 @@ export class IngestionService {
       totalChunks: chunks.length,
       totalTokensApprox: Math.ceil(rawText.length / 4),
       status: 'ready',
+      summary,
       chunks,
       createdAt: new Date().toISOString()
     };

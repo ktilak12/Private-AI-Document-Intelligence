@@ -9,7 +9,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Allowed extensions and MIME types whitelist
-const ALLOWED_EXTENSIONS = new Set(['.pdf', '.docx', '.txt', '.md', '.json', '.csv']);
+const ALLOWED_EXTENSIONS = new Set(['.pdf', '.docx', '.txt', '.md', '.json', '.csv', '.xlsx', '.xls']);
 const ALLOWED_MIME_TYPES = new Set([
   'application/pdf',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -17,6 +17,8 @@ const ALLOWED_MIME_TYPES = new Set([
   'text/markdown',
   'application/json',
   'text/csv',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-excel',
   'application/octet-stream', // Fallback for raw text files
 ]);
 
