@@ -10,7 +10,9 @@
     "start:backend": "cd backend && npx ts-node src/server.ts",
     "test:integration": "cd backend && npx ts-node test/verify-integration.ts",
     "test:rag": "cd backend && npx ts-node test/verify-rag.ts",
-    "test:security": "cd backend && npx ts-node test/verify-security.ts"
+    "test:security": "cd backend && npx ts-node test/verify-security.ts",
+    "benchmark": "cd backend && npx ts-node test/benchmark-retrieval.ts",
+    "cli": "node scripts/demo-cli.js"
   },
   "keywords": ["ai", "document-intelligence", "rag", "stitch", "ui"],
   "author": "Tilak",

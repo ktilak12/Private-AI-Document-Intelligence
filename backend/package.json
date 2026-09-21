@@ -9,7 +9,8 @@
     "dev": "ts-node src/server.js",
     "test:integration": "ts-node test/verify-integration.ts",
     "test:rag": "ts-node test/verify-rag.ts",
-    "test:security": "ts-node test/verify-security.ts"
+    "test:security": "ts-node test/verify-security.ts",
+    "benchmark": "ts-node test/benchmark-retrieval.ts"
   },
   "keywords": [],
   "author": "",
