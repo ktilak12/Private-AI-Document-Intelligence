@@ -1,0 +1,43 @@
+name: PAIDI Enterprise CI & Security Verification
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Backend Build, RAG & Security Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Build TypeScript Core
+        working-directory: ./backend
+        run: npm run build
+
+      - name: 🚀 Run System Integration Test
+        working-directory: ./backend
+        run: npm run test:integration
+
+      - name: 🔍 Run RAG Precision & Retrieval Test
+        working-directory: ./backend
+        run: npm run test:rag
+
+      - name: 🛡️ Run Security Threat & Injection Defense Test
+        working-directory: ./backend
+        run: npm run test:security
