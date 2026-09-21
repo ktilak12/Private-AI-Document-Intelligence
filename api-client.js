@@ -140,6 +140,74 @@ class PaidiApiClient {
     });
   }
 
+  async streamRAG(query, documentIds = [], topK = 4, callbacks = {}) {
+    await this.ensureAuthenticated();
+    const token = this.getToken();
+
+    const response = await fetch(`${this.baseUrl}/chat/stream`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ query, documentIds, topK })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Streaming failed: HTTP ${response.status}`);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const events = buffer.split('\n\n');
+      buffer = events.pop() || '';
+
+      for (const eventBlock of events) {
+        if (!eventBlock.trim()) continue;
+        const lines = eventBlock.split('\n');
+        let eventType = 'message';
+        let eventData = '';
+
+        for (const line of lines) {
+          if (line.startsWith('event: ')) {
+            eventType = line.replace('event: ', '').trim();
+          } else if (line.startsWith('data: ')) {
+            eventData = line.replace('data: ', '').trim();
+          }
+        }
+
+        try {
+          const parsed = JSON.parse(eventData);
+          if (eventType === 'citations' && callbacks.onCitations) {
+            callbacks.onCitations(parsed);
+          } else if (eventType === 'token' && callbacks.onToken) {
+            callbacks.onToken(parsed.text);
+          } else if (eventType === 'done' && callbacks.onDone) {
+            callbacks.onDone(parsed);
+          } else if (eventType === 'error' && callbacks.onError) {
+            callbacks.onError(parsed);
+          }
+        } catch {
+          // Ignore partial parse
+        }
+      }
+    }
+  }
+
+  async compareDocuments(documentId1, documentId2, topic = '') {
+    return await this.request('/chat/compare', {
+      method: 'POST',
+      body: JSON.stringify({ documentId1, documentId2, topic })
+    });
+  }
+
   async getHistory() {
     try {
       const data = await this.request('/chat/history', { method: 'GET' });
