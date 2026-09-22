@@ -129,12 +129,14 @@ npm run cli
 | `GET` | `/health` | Public | Health check and security headers status |
 | `POST` | `/api/auth/register` | Rate-Limited | Register a new user (`admin`, `auditor`, `user`) |
 | `POST` | `/api/auth/login` | Rate-Limited | Authenticate and obtain JWT Bearer token |
-| `POST` | `/api/documents/upload` | `JWT Bearer` | Upload and chunk document (`multipart/form-data`) |
-| `GET` | `/api/documents` | `JWT Bearer` | List all indexed documents with token counts & summaries |
+| `POST` | `/api/documents/upload` | `JWT Bearer` | Upload and chunk document with collection categorization |
+| `GET` | `/api/documents` | `JWT Bearer` | List all indexed documents (`?category=...` filter supported) |
+| `PUT` | `/api/documents/:id/category` | `JWT Bearer` | Update document workspace collection category |
 | `DELETE` | `/api/documents/:id` | `JWT Bearer` | Remove document and associated chunks |
-| `POST` | `/api/chat/query` | `JWT Bearer` | Execute hybrid RAG query with citations |
+| `POST` | `/api/chat/query` | `JWT Bearer` | Execute hybrid RAG query with citations & collection scoping |
 | `POST` | `/api/chat/stream` | `JWT Bearer` | Real-time Server-Sent Events (SSE) token stream |
 | `POST` | `/api/chat/compare` | `JWT Bearer` | Multi-document comparative delta analysis |
+| `POST` | `/api/chat/export` | `JWT Bearer` | One-click Executive Briefing export (Markdown & HTML) |
 | `POST` | `/api/chat/conversations` | `JWT Bearer` | Create new multi-turn conversation session |
 | `GET` | `/api/chat/conversations` | `JWT Bearer` | List user conversation threads |
 | `GET` | `/api/chat/history` | `JWT Bearer` | Retrieve query session history and telemetry |
@@ -149,17 +151,15 @@ npm run cli
 Run the end-to-end verification suites to validate all system layers:
 
 ```bash
-# 1. Complete System Integration Suite (8/8 End-to-End Tests)
-npm run test:integration
+# Unified Test Runner (Runs All Verification & Performance Suites)
+npm test
 
-# 2. RAG Retrieval, Ingestion & Grounding Suite
-npm run test:rag
-
-# 3. Security Threat & Attack Defense Suite (4/4 Tests)
-npm run test:security
-
-# 4. Performance & Retrieval Latency Benchmark
-npm run benchmark
+# Individual Specialized Suites:
+npm run test:security       # Security threat & attack defense suite (12/12 checks)
+npm run test:rag            # RAG retrieval, chunking & citation engine
+npm run test:integration    # End-to-end live integration suite (8/8 steps)
+npm run test:client         # Client SDK and document vault flow test
+npm run benchmark           # Ultra-low latency retrieval & throughput benchmark
 ```
 
 ---

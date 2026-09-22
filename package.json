@@ -1,6 +1,6 @@
 {
   "name": "paidi-ui",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Private AI Document Intelligence System UI",
   "main": "index.html",
   "scripts": {
