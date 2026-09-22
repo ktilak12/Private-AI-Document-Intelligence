@@ -16,16 +16,20 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: Authentic
       return;
     }
 
+    const requestedCategory = req.body?.category || undefined;
+
     const ingested = await ingestionService.processDocument(
       req.file.path,
-      req.file.originalname
+      req.file.originalname,
+      undefined,
+      requestedCategory
     );
 
     recordAuditLog(
       req.user?.id || 'usr_anonymous',
       req.user?.email || 'anonymous@paidi.local',
       'DOCUMENT_UPLOAD',
-      `Uploaded and indexed "${ingested.filename}" (${ingested.totalChunks} chunks)`,
+      `Uploaded and indexed "${ingested.filename}" [Category: ${ingested.category}] (${ingested.totalChunks} chunks)`,
       req.ip || '127.0.0.1',
       'SUCCESS',
       ingested.id
@@ -37,6 +41,7 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: Authentic
         id: ingested.id,
         filename: ingested.filename,
         fileType: ingested.fileType,
+        category: ingested.category,
         totalChunks: ingested.totalChunks,
         totalTokensApprox: ingested.totalTokensApprox,
         status: ingested.status,
@@ -50,13 +55,15 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: Authentic
 });
 
 /**
- * List all indexed documents (Protected)
+ * List all indexed documents with optional category filtering (Protected)
  */
 router.get('/', requireAuth, (req: AuthenticatedRequest, res: Response) => {
-  const docs = ingestionService.getAllDocuments().map(doc => ({
+  const categoryFilter = typeof req.query.category === 'string' ? req.query.category : undefined;
+  const docs = ingestionService.getAllDocuments(categoryFilter).map(doc => ({
     id: doc.id,
     filename: doc.filename,
     fileType: doc.fileType,
+    category: doc.category,
     totalChunks: doc.totalChunks,
     totalTokensApprox: doc.totalTokensApprox,
     status: doc.status,
@@ -67,6 +74,44 @@ router.get('/', requireAuth, (req: AuthenticatedRequest, res: Response) => {
   res.status(200).json({
     total: docs.length,
     documents: docs
+  });
+});
+
+/**
+ * Update document collection category (Protected)
+ */
+router.put('/:id/category', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
+  const docId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const { category } = req.body;
+
+  if (!category || typeof category !== 'string') {
+    res.status(400).json({ error: 'Validation Error', message: 'Category parameter is required.' });
+    return;
+  }
+
+  const updated = ingestionService.updateDocumentCategory(docId, category);
+  if (!updated) {
+    res.status(404).json({ error: 'Document not found' });
+    return;
+  }
+
+  recordAuditLog(
+    req.user?.id || 'usr_anonymous',
+    req.user?.email || 'anonymous@paidi.local',
+    'DOCUMENT_CATEGORY_UPDATE',
+    `Updated collection category for "${updated.filename}" to "${category}"`,
+    req.ip || '127.0.0.1',
+    'SUCCESS',
+    docId
+  );
+
+  res.status(200).json({
+    message: 'Document category updated successfully',
+    document: {
+      id: updated.id,
+      filename: updated.filename,
+      category: updated.category,
+    }
   });
 });
 

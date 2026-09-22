@@ -8,7 +8,7 @@ export interface AuditRecord {
   id: string;
   userId: string;
   userEmail: string;
-  action: 'AUTH_LOGIN' | 'AUTH_REGISTER' | 'DOCUMENT_UPLOAD' | 'DOCUMENT_DELETE' | 'RAG_QUERY' | 'SECURITY_BLOCKED';
+  action: 'AUTH_LOGIN' | 'AUTH_REGISTER' | 'DOCUMENT_UPLOAD' | 'DOCUMENT_DELETE' | 'DOCUMENT_CATEGORY_UPDATE' | 'REPORT_EXPORT' | 'RAG_QUERY' | 'SECURITY_BLOCKED';
   resourceId?: string;
   details: string;
   ipAddress: string;

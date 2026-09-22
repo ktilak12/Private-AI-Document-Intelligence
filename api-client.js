@@ -104,9 +104,10 @@ class PaidiApiClient {
 
   // ==================== DOCUMENT METHODS ====================
 
-  async uploadDocument(file) {
+  async uploadDocument(file, category = null) {
     const formData = new FormData();
     formData.append('file', file);
+    if (category) formData.append('category', category);
 
     return await this.request('/documents/upload', {
       method: 'POST',
@@ -114,9 +115,10 @@ class PaidiApiClient {
     });
   }
 
-  async getDocuments() {
+  async getDocuments(category = null) {
     try {
-      const data = await this.request('/documents', { method: 'GET' });
+      const endpoint = category && category !== 'All' ? `/documents?category=${encodeURIComponent(category)}` : '/documents';
+      const data = await this.request(endpoint, { method: 'GET' });
       return data.documents || [];
     } catch {
       return [];
@@ -127,17 +129,50 @@ class PaidiApiClient {
     return await this.request(`/documents/${id}`, { method: 'GET' });
   }
 
+  async updateDocumentCategory(id, category) {
+    return await this.request(`/documents/${id}/category`, {
+      method: 'PUT',
+      body: JSON.stringify({ category })
+    });
+  }
+
   async deleteDocument(id) {
     return await this.request(`/documents/${id}`, { method: 'DELETE' });
   }
 
   // ==================== RAG & CHAT METHODS ====================
 
-  async queryRAG(query, documentIds = [], topK = 4) {
+  async queryRAG(query, documentIds = [], topK = 4, category = null) {
     return await this.request('/chat/query', {
       method: 'POST',
-      body: JSON.stringify({ query, documentIds, topK })
+      body: JSON.stringify({ query, documentIds, topK, category })
     });
+  }
+
+  async exportBriefing(reportData, format = 'markdown') {
+    await this.ensureAuthenticated();
+    const token = this.getToken();
+
+    const response = await fetch(`${this.baseUrl}/chat/export`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ ...reportData, format })
+    });
+
+    if (!response.ok) throw new Error('Failed to export briefing report');
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `PAIDI_Executive_Briefing_${Date.now()}.${format === 'html' ? 'html' : 'md'}`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
   }
 
   async streamRAG(query, documentIds = [], topK = 4, callbacks = {}) {

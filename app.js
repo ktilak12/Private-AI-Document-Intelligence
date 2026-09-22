@@ -532,6 +532,10 @@
               </div>
 
               <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                <button onclick="promptUpdateCategory(${JSON.stringify(doc.id)}, ${JSON.stringify(doc.category || 'General')})" class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary-container/30 text-primary hover:bg-primary-container/50 border border-primary/40 font-medium transition-colors flex items-center gap-1" title="Click to change collection category">
+                  <span class="material-symbols-outlined text-[12px]">label</span>
+                  <span>${escapeHtml(doc.category || 'General')}</span>
+                </button>
                 <span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">Confidential</span>
                 <span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">Isolated</span>
                 <span class="font-label-sm text-label-sm text-outline ml-auto">${doc.createdAt ? new Date(doc.createdAt).toLocaleDateString() : 'Active'}</span>
@@ -543,7 +547,7 @@
                 <span class="material-symbols-outlined text-[15px]">smart_toy</span>
                 <span>Ask AI</span>
               </button>
-              <button onclick="showToast('Document ID: ' + ${JSON.stringify(doc.id)} + ' - Verified in enclave memory', 'info')" class="h-8 px-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
+              <button onclick="showToast('Document ID: ' + ${JSON.stringify(doc.id)} + ' | Category: ' + ${JSON.stringify(doc.category || 'General')}, 'info')" class="h-8 px-2.5 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
                 <span class="material-symbols-outlined text-[15px]">verified</span>
                 <span>Inspect</span>
               </button>
@@ -556,6 +560,18 @@
       console.warn('Refresh documents error:', e.message);
     }
   }
+
+  window.promptUpdateCategory = async function (id, currentCat) {
+    const newCat = prompt(`Update collection category for document (Current: ${currentCat}):\nOptions: Legal, Financial, Security, HR, General`, currentCat);
+    if (!newCat || newCat.trim() === '' || newCat === currentCat) return;
+    try {
+      await window.PaidiApi.updateDocumentCategory(id, newCat.trim());
+      showToast(`Category updated to "${newCat.trim()}"`, 'success');
+      await refreshDocuments();
+    } catch (e) {
+      showToast('Failed to update category: ' + e.message, 'error');
+    }
+  };
 
   window.handleDeleteDocument = async function (id) {
     if (!confirm('Are you sure you want to permanently delete this document from the vector vault?')) return;
@@ -977,6 +993,14 @@
                 <span class="material-symbols-outlined text-[14px]">content_copy</span>
                 <span>Copy</span>
               </button>
+              <button onclick="window.exportCurrentReport(${JSON.stringify(queryText)}, ${JSON.stringify(res.answer)}, ${JSON.stringify(res.citations)}, ${JSON.stringify(res.evaluationMetrics)}, ${res.confidence}, 'markdown')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-primary-container/20 text-primary hover:bg-primary-container/40 text-label-sm font-label-sm border border-primary/30 transition-colors">
+                <span class="material-symbols-outlined text-[14px]">download</span>
+                <span>Export Briefing</span>
+              </button>
+              <button onclick="window.exportCurrentReport(${JSON.stringify(queryText)}, ${JSON.stringify(res.answer)}, ${JSON.stringify(res.citations)}, ${JSON.stringify(res.evaluationMetrics)}, ${res.confidence}, 'html')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
+                <span class="material-symbols-outlined text-[14px]">description</span>
+                <span>HTML Report</span>
+              </button>
               <button onclick="showToast('Answer marked as accurate', 'success')" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-tertiary text-label-sm font-label-sm border border-outline-variant/20 transition-colors">
                 <span class="material-symbols-outlined text-[14px]">thumb_up</span>
                 <span>Accurate</span>
@@ -1006,6 +1030,16 @@
       const loadingEl = document.getElementById(loadingId);
       if (loadingEl) loadingEl.remove();
       showToast('Query error: ' + err.message, 'error');
+    }
+  };
+
+  window.exportCurrentReport = async function (query, answer, citations, evaluationMetrics, confidence, format = 'markdown') {
+    showToast('Generating Executive Briefing Report...', 'info');
+    try {
+      await window.PaidiApi.exportBriefing({ query, answer, citations, evaluationMetrics, confidence }, format);
+      showToast('Executive Briefing report downloaded!', 'success');
+    } catch (e) {
+      showToast('Export Error: ' + e.message, 'error');
     }
   };
 

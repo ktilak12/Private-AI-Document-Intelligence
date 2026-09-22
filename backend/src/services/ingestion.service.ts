@@ -34,6 +34,7 @@ export interface IngestedDocument {
   id: string;
   filename: string;
   fileType: string;
+  category: string;
   contentHash: string;
   totalChunks: number;
   totalTokensApprox: number;
@@ -220,12 +221,33 @@ export class IngestionService {
   }
 
   /**
+   * Infers collection category based on filename and document contents
+   */
+  public inferCategory(filename: string, text: string): string {
+    const combined = (filename + ' ' + text).toLowerCase();
+    if (combined.includes('agreement') || combined.includes('contract') || combined.includes('covenant') || combined.includes('legal') || combined.includes('termination') || combined.includes('clause')) {
+      return 'Legal';
+    }
+    if (combined.includes('financial') || combined.includes('revenue') || combined.includes('capex') || combined.includes('budget') || combined.includes('gaap') || combined.includes('q1') || combined.includes('q2') || combined.includes('q3') || combined.includes('q4') || combined.includes('cost')) {
+      return 'Financial';
+    }
+    if (combined.includes('security') || combined.includes('soc2') || combined.includes('encryption') || combined.includes('enclave') || combined.includes('audit') || combined.includes('compliance') || combined.includes('policy')) {
+      return 'Security';
+    }
+    if (combined.includes('employee') || combined.includes('hr') || combined.includes('benefits') || combined.includes('hiring') || combined.includes('payroll')) {
+      return 'HR';
+    }
+    return 'General';
+  }
+
+  /**
    * Full ingestion pipeline: Reads -> Hashes -> Parses -> Chunks -> Indexes -> Summarizes
    */
   public async processDocument(
     filePath: string,
     originalFilename: string,
-    customId?: string
+    customId?: string,
+    userCategory?: string
   ): Promise<IngestedDocument> {
     const buffer = fs.readFileSync(filePath);
     const hash = this.computeFileHash(buffer);
@@ -234,6 +256,7 @@ export class IngestionService {
     // Check for duplicate hash in memory
     for (const existing of this.inMemoryDocs.values()) {
       if (existing.contentHash === hash) {
+        if (userCategory) existing.category = userCategory;
         return existing;
       }
     }
@@ -241,11 +264,13 @@ export class IngestionService {
     const rawText = await this.parseFile(filePath, originalFilename);
     const chunks = this.chunkText(rawText, docId, originalFilename);
     const summary = this.generateExecutiveSummary(rawText);
+    const category = userCategory || this.inferCategory(originalFilename, rawText);
 
     const ingested: IngestedDocument = {
       id: docId,
       filename: originalFilename,
       fileType: path.extname(originalFilename).replace('.', '').toUpperCase() || 'TXT',
+      category,
       contentHash: hash,
       totalChunks: chunks.length,
       totalTokensApprox: Math.ceil(rawText.length / 4),
@@ -259,12 +284,23 @@ export class IngestionService {
     return ingested;
   }
 
-  public getAllDocuments(): IngestedDocument[] {
-    return Array.from(this.inMemoryDocs.values());
+  public getAllDocuments(categoryFilter?: string): IngestedDocument[] {
+    const docs = Array.from(this.inMemoryDocs.values());
+    if (categoryFilter && categoryFilter !== 'All') {
+      return docs.filter(d => d.category?.toLowerCase() === categoryFilter.toLowerCase());
+    }
+    return docs;
   }
 
   public getDocumentById(id: string): IngestedDocument | undefined {
     return this.inMemoryDocs.get(id);
+  }
+
+  public updateDocumentCategory(id: string, category: string): IngestedDocument | undefined {
+    const doc = this.inMemoryDocs.get(id);
+    if (!doc) return undefined;
+    doc.category = category;
+    return doc;
   }
 
   public deleteDocument(id: string): boolean {
