@@ -8,9 +8,11 @@
     "dev": "npx serve .",
     "build:ui": "node scripts/build.js",
     "start:backend": "cd backend && npx ts-node src/server.ts",
+    "test": "npm run test:security && npm run test:rag && npm run test:integration && npm run benchmark && node scripts/test-security.js && node scripts/test-flow.js",
     "test:integration": "cd backend && npx ts-node test/verify-integration.ts",
     "test:rag": "cd backend && npx ts-node test/verify-rag.ts",
     "test:security": "cd backend && npx ts-node test/verify-security.ts",
+    "test:client": "node scripts/test-flow.js",
     "benchmark": "cd backend && npx ts-node test/benchmark-retrieval.ts",
     "cli": "node scripts/demo-cli.js"
   },
